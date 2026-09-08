@@ -1,0 +1,24 @@
+{
+  "name": "api-contracts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/peopleware/api-contracts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://bitbucket.org/peopleware/api-contracts/issues"
+  },
+  "homepage": "https://bitbucket.org/peopleware/api-contracts#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
