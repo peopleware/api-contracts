@@ -10,7 +10,10 @@ export default defineConfig({
   format: ["esm", "cjs"],
   target: "es2022",
   platform: "browser",
-  dts: true,
+  dts: {
+    // tsup injects baseUrl during declaration generation; TypeScript 6 deprecates it.
+    compilerOptions: { ignoreDeprecations: "6.0" },
+  },
   clean: true,
   sourcemap: false,
   splitting: false,
