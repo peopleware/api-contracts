@@ -113,7 +113,8 @@ representative OpenAPI 3.1/3.2 documents are snapshot tested.
 
 ## Development
 
-Use Node 22.18+ and npm. `npm ci` installs the locked toolchain.
+Use Node 24 LTS and npm. `npm ci` installs the locked toolchain.
+Both GitHub workflows read `.nvmrc` and select the latest available Node 24 release.
 
 | Command                    | Purpose                                                                  |
 | -------------------------- | ------------------------------------------------------------------------ |

@@ -54,7 +54,7 @@ The workflow checks GitHub's [push event fields](https://docs.github.com/en/webh
 before tag verification and at both release jobs.
 See [GitHub deployment protection](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments).
 
-For a local release rehearsal, use Node 22.18+, install REUSE 6.2.0, run `npm ci`,
+For a local release rehearsal, use Node 24 LTS, install REUSE 6.2.0, run `npm ci`,
 set `RELEASE_TAG` to the proposed version tag and run `npm run release:pack`.
 This creates an inspected archive under `artifacts/` without publishing it.
 CI uses the pinned `fsfe/reuse:6.2.0` image as the authoritative license gate.
