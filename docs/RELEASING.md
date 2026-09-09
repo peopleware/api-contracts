@@ -3,15 +3,20 @@
 
 # Release setup and operation
 
-These Bitbucket/npm account settings must be configured by a repository owner;
-the pipeline YAML does not configure them:
+These GitHub/npm account settings must be configured by a repository owner
+before pushing a release tag; the workflow YAML does not configure them:
 
-- Prohibit direct pushes to `main`; require a PR, one approval, resolved tasks,
-  and a successful latest pipeline.
+- Prohibit direct pushes to `main`; require a PR, one approval, resolved
+  conversations, and successful Quality, Package contract, License compliance,
+  and Dependency Audit checks.
 - Restrict `v*` tag creation to release maintainers.
-- Create the `production` deployment and restrict execution to release maintainers.
-- Set `NPM_TOKEN` as a secured **production deployment** variable, never a
-  repository variable. Use a short-lived granular token limited to publishing
+- Create the `production` environment, configure release maintainers as required
+  reviewers, and prevent self-review. Restrict deployment branches and tags to
+  selected tags matching `v*`, with no branches allowed. Required reviewers are
+  the manual publication gate; declaring an environment in YAML alone does not
+  require approval. Ensure the repository's GitHub plan supports this protection.
+- Set `NPM_TOKEN` as a **production environment secret**, never a
+  repository secret. Use a short-lived granular token limited to publishing
   `@ppwcode/api-contracts`. Enable bypass-2FA for non-interactive publishing and
   rotate before expiry. Ensure the npm scope permits public publication.
 
@@ -23,7 +28,7 @@ description. Comments and subsection headings alone do not count. The release
 tag check enforces this in the tag pipeline, local release rehearsal, and publish
 step. The tag pipeline repeats all PR gates, builds
 once, verifies npm availability, inspects the archive allowlist, and retains the
-tarball. Trigger the production step only after reviewing the successful gates.
+tarball. Approve the production deployment only after reviewing the successful gates.
 It rechecks npm availability and publishes the existing artifact with
 `npm publish <tarball> --access public`. Registry or network errors fail closed.
 An already published version cannot be republished.
@@ -32,15 +37,24 @@ The temporary npm authentication file exists only during the publish step and is
 removed on exit. The pipeline never edits versions, creates commits or tags, or
 publishes directly from a branch. Never commit an authenticated `.npmrc`.
 
-No provenance flag is passed: npm's documented supported providers are GitHub
-Actions and GitLab CI/CD. Revisit this when npm adds Bitbucket support. Sources:
-[npm provenance](https://docs.npmjs.com/generating-provenance-statements/) and
-[npm CI/CD token guidance](https://docs.npmjs.com/using-private-packages-in-a-ci-cd-workflow/).
+Publishing retains the existing npm token authentication. Trusted publishing
+and provenance are not configured by this migration.
 
-There is deliberately no default push pipeline, to avoid duplicate PR runs;
-see [Bitbucket start conditions](https://support.atlassian.com/bitbucket-cloud/docs/pipeline-start-conditions/).
+The [CI workflow](../.github/workflows/ci.yml) runs for pushes to `main`, pull
+requests, and manual verification through Actions → CI → Run workflow.
+Manual runs verify only, even when a tag is selected.
+The separate [Publish workflow](../.github/workflows/publish.yml) runs for `v*`
+tag pushes. After validating the tag, it calls the reusable CI workflow and
+waits for every gate before packaging and publishing the verified artifact.
+It has no manual trigger.
+Release packaging and publication require a push that creates a new `v*` tag;
+updates to existing tags and tag deletions cannot publish. The tag must match
+the package version, and that version must not already exist on npm.
+The workflow checks GitHub's [push event fields](https://docs.github.com/en/webhooks/webhook-events-and-payloads#push)
+before tag verification and at both release jobs.
+See [GitHub deployment protection](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments).
 
 For a local release rehearsal, use Node 22.18+, install REUSE 6.2.0, run `npm ci`,
-set `BITBUCKET_TAG` to the proposed version tag and run `npm run release:pack`.
+set `RELEASE_TAG` to the proposed version tag and run `npm run release:pack`.
 This creates an inspected archive under `artifacts/` without publishing it.
 CI uses the pinned `fsfe/reuse:6.2.0` image as the authoritative license gate.

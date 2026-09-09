@@ -4,7 +4,7 @@
 set -eu
 node scripts/check-tag.mjs
 node scripts/check-unpublished.mjs
-: "${NPM_TOKEN:?Set the secured production deployment NPM_TOKEN}"
+: "${NPM_TOKEN:?Set the production environment NPM_TOKEN}"
 set -- artifacts/*.tgz
 [ "$#" -eq 1 ] && [ -f "$1" ] || { echo "Expected exactly one verified tarball"; exit 1; }
 NPM_CONFIG_USERCONFIG="$(mktemp)"

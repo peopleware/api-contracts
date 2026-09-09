@@ -22,7 +22,7 @@ function checkTag(changelog: string | undefined, tag = "v1.0.0") {
       writeFileSync(join(cwd, "CHANGELOG.md"), changelog);
     return spawnSync(process.execPath, [script], {
       cwd,
-      env: { ...process.env, BITBUCKET_TAG: tag },
+      env: { ...process.env, RELEASE_TAG: tag },
       encoding: "utf8",
     });
   } finally {
@@ -74,5 +74,5 @@ test("rejects a missing changelog file", () => {
 test("still rejects a tag that differs from the package version", () => {
   const result = checkTag("## 1.0.0\n- New contracts.\n", "v1.0.1");
   expect(result.status).not.toBe(0);
-  expect(result.stderr).toContain("BITBUCKET_TAG must exactly match v1.0.0");
+  expect(result.stderr).toContain("RELEASE_TAG must exactly match v1.0.0");
 });

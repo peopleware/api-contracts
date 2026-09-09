@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import { readFileSync } from "node:fs";
 const { version } = JSON.parse(readFileSync("package.json", "utf8"));
-if (process.env.BITBUCKET_TAG !== "v" + version)
-  throw new Error("BITBUCKET_TAG must exactly match v" + version);
+if (process.env.RELEASE_TAG !== "v" + version)
+  throw new Error("RELEASE_TAG must exactly match v" + version);
 
 /** Check that the changelog contains a section for the current version **/
 const changelog = readFileSync("CHANGELOG.md", "utf8").replace(

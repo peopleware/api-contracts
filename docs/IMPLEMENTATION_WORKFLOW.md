@@ -10,7 +10,8 @@ apply the relevant steps and verify the affected package guarantees.
 The [README](../README.md) describes existing contracts and consumer usage.
 Use [package.json](../package.json) for current commands and exports,
 [tsup.config.ts](../tsup.config.ts) for build configuration, and
-[bitbucket-pipelines.yml](../bitbucket-pipelines.yml) for CI gates.
+[CI workflow](../.github/workflows/ci.yml) for verification gates and
+[Publish workflow](../.github/workflows/publish.yml) for version-tag releases.
 
 ## 1. Define the contract and compatibility impact
 

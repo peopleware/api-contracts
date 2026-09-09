@@ -129,15 +129,18 @@ Use Node 22.18+ and npm. `npm ci` installs the locked toolchain.
 | `npm run license:check`    | REUSE lint (install REUSE 6.2.0 first)                                   |
 | `npm run license:docker`   | License check using `fsfe/reuse:6.2.0`                                   |
 | `npm run verify`           | All quality, package and license gates                                   |
-| `npm run release:pack`     | Verify matching `BITBUCKET_TAG`, all gates, npm availability and archive |
+| `npm run release:pack`     | Verify matching `RELEASE_TAG`, all gates, npm availability and archive |
 
 `npm run ci:check-production-vulnerabilities` audits production dependencies using
 the locked `better-npm-audit` tool. It also runs as part of `npm run verify`.
 
-Bitbucket runs independent quality, package, license and Dependency Audit steps for PRs, `main`,
-version tags and the custom `verify` pipeline. Release tags use the same gates;
+GitHub Actions runs independent quality, package, license and Dependency Audit jobs for PRs, `main`,
+version tags and manual `CI` workflow runs. The separate
+[Publish workflow](.github/workflows/publish.yml) handles new version tags and
+calls the reusable [CI workflow](.github/workflows/ci.yml) for the same gates;
 the package build is handed to the tarball step as an artifact, then the exact
-tarball is handed to a manual production deployment. No branch build publishes.
+tarball is handed to a production deployment requiring environment approval.
+No branch build or manual verification run publishes.
 
 Category paths, exported names, component IDs, brands and accepted wire values
 are public API. Additive schemas are minor releases. Validation, branding or
