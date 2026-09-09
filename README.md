@@ -144,5 +144,7 @@ are public API. Additive schemas are minor releases. Validation, branding or
 import-path changes require a major release. Future `/number`, `/money` and
 `/personalia` entrypoints are reserved and not currently exported.
 
+Follow the [implementation workflow](docs/IMPLEMENTATION_WORKFLOW.md) when adding
+or changing contracts, entrypoints, or package infrastructure.
 See [release setup](docs/RELEASING.md) for repository controls and publishing.
 Licensed under [Apache License 2.0](LICENSE); see [NOTICE](NOTICE).
