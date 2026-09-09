@@ -9,7 +9,7 @@ apply the relevant steps and verify the affected package guarantees.
 
 The [README](../README.md) describes existing contracts and consumer usage.
 Use [package.json](../package.json) for current commands and exports,
-[tsup.config.ts](../tsup.config.ts) for build configuration, and
+[tsdown.config.ts](../tsdown.config.ts) for build configuration, and
 [CI workflow](../.github/workflows/ci.yml) for verification gates and
 [Publish workflow](../.github/workflows/publish.yml) for version-tag releases.
 
@@ -47,7 +47,7 @@ identified before it affects implementation.
 - Use the existing `/string`, `/time`, and `/be` categories where appropriate.
   Reserved `/number`, `/money`, and `/personalia` entrypoints become public only
   when they contain a public contract.
-- For a new category, add its build entry in `tsup.config.ts` and conditional
+- For a new category, add its build entry in `tsdown.config.ts` and conditional
   exports in `package.json`, including ESM/CommonJS and their declarations.
 
 Complete when every new public symbol has one category and import path, and any

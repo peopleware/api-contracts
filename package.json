@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Canonical Zod schemas and inferred types for reusable API contracts",
   "scripts": {
-    "build": "tsup && node scripts/banner.mjs",
+    "build": "tsdown && node scripts/banner.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest --exclude \"**/*.integration.spec.ts\"",
@@ -47,7 +47,7 @@
     "fast-check": "^4.9.0",
     "prettier": "3.9.6",
     "publint": "^0.3.24",
-    "tsup": "^8.5.1",
+    "tsdown": "^0.23.0",
     "typescript": "6.0.3",
     "typescript-eslint": "^8.70.0",
     "vitest": "5.0.0",
