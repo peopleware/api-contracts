@@ -1,0 +1,89 @@
+# Copyright 2026 PeopleWare N.V.
+# SPDX-License-Identifier: Apache-2.0
+image: node:22.18.0-bookworm
+
+definitions:
+  caches:
+    npm: ~/.npm
+  steps:
+    - step: &quality
+        name: Quality
+        caches: [npm]
+        script:
+          - npm ci
+          - npm run lint
+          - npm run typecheck
+          - npm run test:coverage
+          - npm run test:types
+        artifacts:
+          upload:
+            - name: quality-reports
+              type: scoped
+              paths: [coverage/**, test-results/**]
+              capture-on: always
+    - step: &package
+        name: Package contract
+        caches: [npm]
+        script:
+          - npm ci
+          - npm run verify:package
+        artifacts:
+          - dist/**
+    - step: &dependency-audit
+        name: Dependency Audit
+        caches: [npm]
+        script:
+          - npm ci
+          - npm run ci:check-production-vulnerabilities
+    - step: &license
+        name: License compliance
+        image: fsfe/reuse:6.2.0
+        script:
+          - reuse lint
+
+pipelines:
+  pull-requests:
+    "**":
+      - parallel:
+          - step: *quality
+          - step: *package
+          - step: *license
+          - step: *dependency-audit
+  branches:
+    main:
+      - parallel:
+          - step: *quality
+          - step: *package
+          - step: *license
+          - step: *dependency-audit
+  tags:
+    "v*":
+      - step:
+          name: Verify release tag
+          script:
+            - node scripts/check-tag.mjs
+      - parallel:
+          - step: *quality
+          - step: *package
+          - step: *license
+          - step: *dependency-audit
+      - step:
+          name: Package verified release
+          script:
+            - node scripts/check-unpublished.mjs
+            - node scripts/pack.mjs
+          artifacts:
+            - artifacts/*.tgz
+      - step:
+          name: Publish verified tarball
+          deployment: production
+          trigger: manual
+          script:
+            - sh scripts/publish.sh
+  custom:
+    verify:
+      - parallel:
+          - step: *quality
+          - step: *package
+          - step: *license
+          - step: *dependency-audit

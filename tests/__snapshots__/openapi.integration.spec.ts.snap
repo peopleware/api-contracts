@@ -1,0 +1,251 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generates OpenAPI 3.1.0 using packaged schemas 1`] = `
+{
+  "components": {
+    "schemas": {
+      "BelgianEnterpriseNumber": {
+        "description": "Canonical 10-digit KBO/CBE starting with 0 or 1. Checksum requires runtime validation; registry membership is not checked.",
+        "examples": [
+          "0123456749",
+        ],
+        "maxLength": 10,
+        "minLength": 10,
+        "pattern": "^[01][0-9]{9}$",
+        "title": "Belgian enterprise number",
+        "type": "string",
+      },
+      "BelgianIban": {
+        "description": "Uppercase BE followed by 14 digits with ISO 13616 modulo-97 validation. Does not establish account existence. Checksum requires runtime validation.",
+        "examples": [
+          "BE68539007547034",
+        ],
+        "maxLength": 16,
+        "minLength": 16,
+        "pattern": "^BE[0-9]{14}$",
+        "title": "Belgian IBAN",
+        "type": "string",
+      },
+      "BelgianSocialSecurityNumber": {
+        "description": "Canonical 11-digit INSZ/NISS, including BIS numbers. Validates pre-2000 or post-1999 modulo-97; does not validate birth date, gender or registry membership. Checksum requires runtime validation.",
+        "examples": [
+          "00000000097",
+        ],
+        "maxLength": 11,
+        "minLength": 11,
+        "pattern": "^[0-9]{11}$",
+        "title": "Belgian social security number",
+        "type": "string",
+      },
+      "BelgianVatNumber": {
+        "description": "Uppercase BE followed by a structurally valid Belgian enterprise number. Does not establish current VAT registration. Checksum requires runtime validation.",
+        "examples": [
+          "BE0123456749",
+        ],
+        "maxLength": 12,
+        "minLength": 12,
+        "pattern": "^BE[01][0-9]{9}$",
+        "title": "Belgian VAT number",
+        "type": "string",
+      },
+      "DateOnly": {
+        "description": "Calendar-valid date in canonical YYYY-MM-DD format, without time or timezone.",
+        "examples": [
+          "2024-02-29",
+        ],
+        "format": "date",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$",
+        "title": "Date only",
+        "type": "string",
+      },
+      "TrimmedString": {
+        "description": "Non-empty string without leading or trailing whitespace. Input is never transformed.",
+        "examples": [
+          "Hello world",
+        ],
+        "minLength": 1,
+        "pattern": "^\\S(?:[\\s\\S]*\\S)?$(?![\\s\\S])",
+        "title": "Trimmed string",
+        "type": "string",
+      },
+    },
+  },
+  "info": {
+    "title": "Contracts",
+    "version": "1.0.0",
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/example": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "date": {
+                      "$ref": "#/components/schemas/DateOnly",
+                    },
+                    "enterprise": {
+                      "$ref": "#/components/schemas/BelgianEnterpriseNumber",
+                    },
+                    "iban": {
+                      "$ref": "#/components/schemas/BelgianIban",
+                    },
+                    "name": {
+                      "$ref": "#/components/schemas/TrimmedString",
+                    },
+                    "niss": {
+                      "$ref": "#/components/schemas/BelgianSocialSecurityNumber",
+                    },
+                    "vat": {
+                      "$ref": "#/components/schemas/BelgianVatNumber",
+                    },
+                  },
+                  "required": [
+                    "name",
+                    "date",
+                    "enterprise",
+                    "niss",
+                    "vat",
+                    "iban",
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+            "description": "Example",
+          },
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`generates OpenAPI 3.2.0 using packaged schemas 1`] = `
+{
+  "components": {
+    "schemas": {
+      "BelgianEnterpriseNumber": {
+        "description": "Canonical 10-digit KBO/CBE starting with 0 or 1. Checksum requires runtime validation; registry membership is not checked.",
+        "examples": [
+          "0123456749",
+        ],
+        "maxLength": 10,
+        "minLength": 10,
+        "pattern": "^[01][0-9]{9}$",
+        "title": "Belgian enterprise number",
+        "type": "string",
+      },
+      "BelgianIban": {
+        "description": "Uppercase BE followed by 14 digits with ISO 13616 modulo-97 validation. Does not establish account existence. Checksum requires runtime validation.",
+        "examples": [
+          "BE68539007547034",
+        ],
+        "maxLength": 16,
+        "minLength": 16,
+        "pattern": "^BE[0-9]{14}$",
+        "title": "Belgian IBAN",
+        "type": "string",
+      },
+      "BelgianSocialSecurityNumber": {
+        "description": "Canonical 11-digit INSZ/NISS, including BIS numbers. Validates pre-2000 or post-1999 modulo-97; does not validate birth date, gender or registry membership. Checksum requires runtime validation.",
+        "examples": [
+          "00000000097",
+        ],
+        "maxLength": 11,
+        "minLength": 11,
+        "pattern": "^[0-9]{11}$",
+        "title": "Belgian social security number",
+        "type": "string",
+      },
+      "BelgianVatNumber": {
+        "description": "Uppercase BE followed by a structurally valid Belgian enterprise number. Does not establish current VAT registration. Checksum requires runtime validation.",
+        "examples": [
+          "BE0123456749",
+        ],
+        "maxLength": 12,
+        "minLength": 12,
+        "pattern": "^BE[01][0-9]{9}$",
+        "title": "Belgian VAT number",
+        "type": "string",
+      },
+      "DateOnly": {
+        "description": "Calendar-valid date in canonical YYYY-MM-DD format, without time or timezone.",
+        "examples": [
+          "2024-02-29",
+        ],
+        "format": "date",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$",
+        "title": "Date only",
+        "type": "string",
+      },
+      "TrimmedString": {
+        "description": "Non-empty string without leading or trailing whitespace. Input is never transformed.",
+        "examples": [
+          "Hello world",
+        ],
+        "minLength": 1,
+        "pattern": "^\\S(?:[\\s\\S]*\\S)?$(?![\\s\\S])",
+        "title": "Trimmed string",
+        "type": "string",
+      },
+    },
+  },
+  "info": {
+    "title": "Contracts",
+    "version": "1.0.0",
+  },
+  "openapi": "3.2.0",
+  "paths": {
+    "/example": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "date": {
+                      "$ref": "#/components/schemas/DateOnly",
+                    },
+                    "enterprise": {
+                      "$ref": "#/components/schemas/BelgianEnterpriseNumber",
+                    },
+                    "iban": {
+                      "$ref": "#/components/schemas/BelgianIban",
+                    },
+                    "name": {
+                      "$ref": "#/components/schemas/TrimmedString",
+                    },
+                    "niss": {
+                      "$ref": "#/components/schemas/BelgianSocialSecurityNumber",
+                    },
+                    "vat": {
+                      "$ref": "#/components/schemas/BelgianVatNumber",
+                    },
+                  },
+                  "required": [
+                    "name",
+                    "date",
+                    "enterprise",
+                    "niss",
+                    "vat",
+                    "iban",
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+            "description": "Example",
+          },
+        },
+      },
+    },
+  },
+}
+`;

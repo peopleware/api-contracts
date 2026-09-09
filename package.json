@@ -1,24 +1,87 @@
 {
-  "name": "api-contracts",
+  "name": "@ppwcode/api-contracts",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Canonical Zod schemas and inferred types for reusable API contracts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsup && node scripts/banner.mjs",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest --exclude \"**/*.integration.spec.ts\"",
+    "test:unit": "vitest run --exclude \"**/*.integration.spec.ts\"",
+    "test:types": "vitest run --typecheck.only --outputFile.junit=test-results/types.xml",
+    "test:integration": "vitest run .integration.spec.ts --typecheck.enabled=false --outputFile.junit=test-results/integration.xml",
+    "test:coverage": "vitest run --coverage --exclude \"**/*.integration.spec.ts\" --typecheck.enabled=false",
+    "test:ci": "npm run test:coverage && npm run test:types && npm run test:integration",
+    "ci:check-production-vulnerabilities": "npx better-npm-audit audit --production",
+    "license:check": "reuse lint",
+    "license:docker": "docker run --rm -v .:/data fsfe/reuse:6.2.0 lint",
+    "verify:quality": "npm run lint && npm run typecheck && npm run test:coverage && npm run test:types",
+    "verify:package": "npm run build && npm run test:integration && publint && attw --pack --profile node16 && npm pack --dry-run",
+    "verify": "npm run verify:quality && npm run verify:package && npm run license:check && npm run ci:check-production-vulnerabilities",
+    "release:pack": "node scripts/check-tag.mjs && npm run verify && node scripts/check-unpublished.mjs && node scripts/pack.mjs",
+    "format": "prettier --write src tests scripts docs *.ts *.js *.json *.yml *.md",
+    "format:check": "prettier --check src tests scripts docs *.ts *.js *.json *.yml *.md"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/peopleware/api-contracts.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "author": {
+    "name": "David De Kok",
+    "email": "david_de_kok@peopleware.be"
+  },
+  "license": "Apache-2.0",
+  "type": "module",
   "bugs": {
     "url": "https://bitbucket.org/peopleware/api-contracts/issues"
   },
   "homepage": "https://bitbucket.org/peopleware/api-contracts#readme",
   "devDependencies": {
-    "typescript": "^7.0.2"
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.5.0",
+    "@vitest/coverage-v8": "5.0.0",
+    "better-npm-audit": "3.11.0",
+    "eslint": "^10.10.0",
+    "fast-check": "^4.9.0",
+    "prettier": "3.9.6",
+    "publint": "^0.3.24",
+    "tsup": "^8.5.1",
+    "typescript": "7.0.2",
+    "typescript-eslint": "^8.70.0",
+    "vitest": "5.0.0",
+    "zod": "^4.5.4",
+    "zod-openapi": "^6.0.2"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "LICENSE",
+    "NOTICE",
+    "README.md"
+  ],
+  "exports": {
+    "./*": {
+      "import": {
+        "types": "./dist/*/index.d.ts",
+        "default": "./dist/*/index.js"
+      },
+      "require": {
+        "types": "./dist/*/index.d.cts",
+        "default": "./dist/*/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "zod": "^4.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -1,0 +1,9 @@
+# Copyright 2026 PeopleWare N.V.
+# SPDX-License-Identifier: Apache-2.0
+version = 1
+
+[[annotations]]
+path = ["package.json", "package-lock.json", "tests/__snapshots__/**", ".agents/IMPLEMENTATION_PLAN.md", "NOTICE", ".nvmrc"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 PeopleWare N.V."
+SPDX-License-Identifier = "Apache-2.0"

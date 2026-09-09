@@ -1,0 +1,13 @@
+# Copyright 2026 PeopleWare N.V.
+# SPDX-License-Identifier: Apache-2.0
+node_modules/
+dist/
+coverage/
+test-results/
+artifacts/
+.venv/
+*.tgz
+*.log
+.idea/
+.DS_Store
+Thumbs.db

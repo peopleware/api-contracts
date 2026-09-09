@@ -1,0 +1,119 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`JSON Schema metadata for Calendar-valid date in canonical YYYY-M… > DateOnly 1`] = `
+{
+  "$defs": {
+    "DateOnly": {
+      "description": "Calendar-valid date in canonical YYYY-MM-DD format, without time or timezone.",
+      "examples": [
+        "2024-02-29",
+      ],
+      "format": "date",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$",
+      "title": "Date only",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/DateOnly",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
+exports[`JSON Schema metadata for Canonical 10-digit KBO/CBE starting wit… > BelgianEnterpriseNumber 1`] = `
+{
+  "$defs": {
+    "BelgianEnterpriseNumber": {
+      "description": "Canonical 10-digit KBO/CBE starting with 0 or 1. Checksum requires runtime validation; registry membership is not checked.",
+      "examples": [
+        "0123456749",
+      ],
+      "maxLength": 10,
+      "minLength": 10,
+      "pattern": "^[01][0-9]{9}$",
+      "title": "Belgian enterprise number",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/BelgianEnterpriseNumber",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
+exports[`JSON Schema metadata for Canonical 11-digit INSZ/NISS, including… > BelgianSocialSecurityNumber 1`] = `
+{
+  "$defs": {
+    "BelgianSocialSecurityNumber": {
+      "description": "Canonical 11-digit INSZ/NISS, including BIS numbers. Validates pre-2000 or post-1999 modulo-97; does not validate birth date, gender or registry membership. Checksum requires runtime validation.",
+      "examples": [
+        "00000000097",
+      ],
+      "maxLength": 11,
+      "minLength": 11,
+      "pattern": "^[0-9]{11}$",
+      "title": "Belgian social security number",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/BelgianSocialSecurityNumber",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
+exports[`JSON Schema metadata for Non-empty string without leading or tra… > TrimmedString 1`] = `
+{
+  "$defs": {
+    "TrimmedString": {
+      "description": "Non-empty string without leading or trailing whitespace. Input is never transformed.",
+      "examples": [
+        "Hello world",
+      ],
+      "minLength": 1,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$(?![\\s\\S])",
+      "title": "Trimmed string",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/TrimmedString",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
+exports[`JSON Schema metadata for Uppercase BE followed by 14 digits with… > BelgianIban 1`] = `
+{
+  "$defs": {
+    "BelgianIban": {
+      "description": "Uppercase BE followed by 14 digits with ISO 13616 modulo-97 validation. Does not establish account existence. Checksum requires runtime validation.",
+      "examples": [
+        "BE68539007547034",
+      ],
+      "maxLength": 16,
+      "minLength": 16,
+      "pattern": "^BE[0-9]{14}$",
+      "title": "Belgian IBAN",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/BelgianIban",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
+exports[`JSON Schema metadata for Uppercase BE followed by a structurally… > BelgianVatNumber 1`] = `
+{
+  "$defs": {
+    "BelgianVatNumber": {
+      "description": "Uppercase BE followed by a structurally valid Belgian enterprise number. Does not establish current VAT registration. Checksum requires runtime validation.",
+      "examples": [
+        "BE0123456749",
+      ],
+      "maxLength": 12,
+      "minLength": 12,
+      "pattern": "^BE[01][0-9]{9}$",
+      "title": "Belgian VAT number",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/BelgianVatNumber",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
