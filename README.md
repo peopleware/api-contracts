@@ -67,6 +67,28 @@ fixtures and restrict storage and access to what your application requires.
 
 ## JSON Schema and OpenAPI
 
+`npm run build` generates standalone YAML files in `dist/schemas/`, included in
+the published package. Each file contains JSON Schema Draft 2020-12 and is named
+after its canonical component ID: `TrimmedString`, `DateOnly`,
+`BelgianSocialSecurityNumber`, `BelgianEnterpriseNumber`, `BelgianVatNumber`, and
+`BelgianIban`. Aliases share their canonical file.
+
+Consumers can resolve a file with
+`import.meta.resolve("@ppwcode/api-contracts/schemas/DateOnly.yaml")` or
+`require.resolve("@ppwcode/api-contracts/schemas/DateOnly.yaml")` and read it with
+a YAML parser. OpenAPI 3.1/3.2 documents can reference the installed files directly
+(adjust the relative path to the location of your API document):
+
+```yaml
+components:
+  schemas:
+    DateOnly:
+      $ref: ./node_modules/@ppwcode/api-contracts/dist/schemas/DateOnly.yaml
+```
+
+No consumer-side schema generation is needed. You can also generate JSON Schema
+programmatically:
+
 ```ts
 import { z } from "zod";
 import { BelgianEnterpriseNumberSchema } from "@ppwcode/api-contracts/be";
@@ -122,7 +144,7 @@ Both GitHub workflows read `.nvmrc` and select the latest available Node 24 rele
 | `npm run test:unit`        | Unit, property and metadata tests                                        |
 | `npm run test:types`       | Identifier and alias type assertions                                     |
 | `npm run test:coverage`    | Unit tests, coverage and JUnit report                                    |
-| `npm run build`            | ESM/CommonJS and declarations with copyright banners                     |
+| `npm run build`            | ESM/CommonJS, declarations and standalone schema YAML files               |
 | `npm run test:integration` | OpenAPI tests against `dist` (build first)                               |
 | `npm run test:ci`          | All tests (build first)                                                  |
 | `npm run verify:quality`   | Lint, strict types, unit coverage and type tests                         |
