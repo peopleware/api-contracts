@@ -170,7 +170,25 @@ are public API. Additive schemas are minor releases. Validation, branding or
 import-path changes require a major release. Future `/number`, `/money` and
 `/personalia` entrypoints are reserved and not currently exported.
 
+## Contributing
+
 Follow the [implementation workflow](docs/IMPLEMENTATION_WORKFLOW.md) when adding
 or changing contracts, entrypoints, or package infrastructure.
-See [release setup](docs/RELEASING.md) for repository controls and publishing.
+
+Always use `npm version [major|minor|patch]` to bump the version when preparing a
+release, choosing one of `major`, `minor`, or `patch` (for example,
+`npm version patch`). Add and commit a matching `## X.Y.Z` entry with a change
+description in [CHANGELOG.md](CHANGELOG.md) first.
+
+The command runs `verify:quality` before the bump, updates `package.json` and
+`package-lock.json`, checks the changelog for the new version, and creates the
+version commit and tag. When preparing the version update for a PR, use
+`npm version [major|minor|patch] --no-git-tag-version` and include the updated
+version files in the PR.
+
+After the version update and changelog are reviewed and merged, push the matching
+`vX.Y.Z` tag on the merged commit to trigger the release workflow. Publishing
+requires successful checks and production approval. Follow
+[release setup](docs/RELEASING.md) for the complete release procedure.
+
 Licensed under [Apache License 2.0](LICENSE); see [NOTICE](NOTICE).

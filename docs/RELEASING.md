@@ -33,6 +33,13 @@ It rechecks npm availability and publishes the existing artifact with
 `npm publish <tarball> --access public`. Registry or network errors fail closed.
 An already published version cannot be republished.
 
+Add the target version's changelog entry before running `npm version <version>`
+(or `npm version <version> --no-git-tag-version` when preparing a PR).
+The `version` lifecycle hook applies the same changelog check to the new version
+before npm creates a commit or tag. If the check fails, npm leaves `package.json`
+and `package-lock.json` updated. Correct the changelog and rerun with the explicit
+target version and `--allow-same-verison`; do not repeat an incremental bump.
+
 The temporary npm authentication file exists only during the publish step and is
 removed on exit. The pipeline never edits versions, creates commits or tags, or
 publishes directly from a branch. Never commit an authenticated `.npmrc`.

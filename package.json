@@ -20,7 +20,9 @@
     "verify": "npm run verify:quality && npm run verify:package && npm run license:check && npm run ci:check-production-vulnerabilities",
     "release:pack": "node scripts/check-tag.mjs && npm run verify && node scripts/check-unpublished.mjs && node scripts/pack.mjs",
     "format": "prettier --write src tests scripts docs .github *.ts *.js *.json *.md",
-    "format:check": "prettier --check src tests scripts docs .github *.ts *.js *.json *.md"
+    "format:check": "prettier --check src tests scripts docs .github *.ts *.js *.json *.md",
+    "preversion": "npm run verify:quality",
+    "version": "node scripts/check-changelog.mjs"
   },
   "repository": {
     "type": "git",
