@@ -11,7 +11,8 @@ The [README](../README.md) describes existing contracts and consumer usage.
 Use [package.json](../package.json) for current commands and exports,
 [tsdown.config.ts](../tsdown.config.ts) for build configuration, and
 [CI workflow](../.github/workflows/ci.yml) for verification gates and
-[Publish workflow](../.github/workflows/publish.yml) for version-tag releases.
+[Release workflow](../.github/workflows/release.yml) for tag-triggered GitHub
+releases and [Publish workflow](../.github/workflows/publish.yml) for npm publication.
 
 ## 1. Define the contract and compatibility impact
 
@@ -127,7 +128,7 @@ dependency, build, test, or pipeline changes.
 For package changes, review the generated archive listing: include the public
 build, README, LICENSE, and NOTICE; exclude tests, coverage, temporary files, and
 source maps. If changing CI, preserve the verification gates for PRs, `main`,
-version tags, and custom verification, with artifact handoff and no transfer of
+published releases, and custom verification, with artifact handoff and no transfer of
 `node_modules` between steps.
 
 Complete when relevant checks pass, the diff contains only intended changes, and
@@ -139,7 +140,7 @@ run, and any unresolved verification limitations.
 Follow [release setup and operation](RELEASING.md) for repository controls,
 version and changelog checks, tag creation, local packaging rehearsal, credential
 handling, and manual production publication. Branch builds verify changes;
-publication uses the package build verified by the tag pipeline.
+publication uses the package build verified by the release-triggered pipeline.
 
 Complete implementation work with a reviewable change. When release execution is
 also in scope, complete the applicable release steps and report their outcome.

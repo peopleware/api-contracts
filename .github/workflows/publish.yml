@@ -1,10 +1,14 @@
 # Copyright 2026 PeopleWare N.V.
 # SPDX-License-Identifier: Apache-2.0
-name: Publish
+name: Publish release to NPM
 
 on:
-  push:
-    tags: ["v*"]
+  workflow_call:
+    inputs:
+      release_tag:
+        description: Release tag to verify and publish
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -12,7 +16,6 @@ permissions:
 jobs:
   verify-tag:
     name: Verify release tag
-    if: github.event.created == true
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
@@ -24,7 +27,7 @@ jobs:
           check-latest: true
       - run: node scripts/check-tag.mjs
         env:
-          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
 
   verify:
     name: Verify release
@@ -57,5 +60,5 @@ jobs:
           path: dist/
       - run: node scripts/check-tag.mjs
         env:
-          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
       - run: npm publish --access public

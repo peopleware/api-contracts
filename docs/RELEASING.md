@@ -25,19 +25,36 @@ update and changelog entry before creating `vX.Y.Z` on that commit. The tag must
 exactly match the package version. `CHANGELOG.md` must contain a matching
 `## X.Y.Z` heading (optionally followed by a date or status) and a nonempty change
 description. Comments and subsection headings alone do not count. The release
-tag check enforces this in the tag pipeline, local release rehearsal, and publish
-step. The tag pipeline repeats all PR gates and passes the verified build
-directly to the publish job. Approve the production deployment only after
-reviewing the successful gates. It runs `npm publish`, using the public access
-and registry settings in `package.json`. npm rejects an already published
-package name and version.
+tag check enforces this during automatic release creation, local release rehearsal,
+and npm publication.
+
+Pushing a new `v*` tag runs the [Release workflow](../.github/workflows/release.yml).
+It validates the tag and uses GitHub's built-in workflow token to create a GitHub
+release titled `X.Y.Z` for `vX.Y.Z`, using the matching changelog section as its
+description. The version heading and HTML comments are excluded; Markdown
+subsections and formatting are preserved. Updates to existing tags and tag
+deletions do not start the workflow.
+
+After creating the release, the Release workflow calls the reusable
+[Publish workflow](../.github/workflows/publish.yml) directly. This avoids relying
+on a `release: published` event, because GitHub does not start another workflow
+for events created with the built-in token. The Publish workflow checks the tag
+and repeats all CI gates against the tagged commit, then passes the verified build
+directly to the publish job. Approve the production deployment after reviewing
+the successful gates. It runs `npm publish`, using the public access and registry
+settings in `package.json`. npm rejects an already published package name and
+version.
+
+If automatic release creation fails, rerun the failed Release job. If npm
+publication fails, rerun the failed jobs in the Release workflow after resolving
+the cause. Both workflow files must be included in the commit being released.
 
 Add the target version's changelog entry before running `npm version <version>`
 (or `npm version <version> --no-git-tag-version` when preparing a PR).
 The `version` lifecycle hook applies the same changelog check to the new version
 before npm creates a commit or tag. If the check fails, npm leaves `package.json`
 and `package-lock.json` updated. Correct the changelog and rerun with the explicit
-target version and `--allow-same-verison`; do not repeat an incremental bump.
+target version and `--allow-same-version`; do not repeat an incremental bump.
 
 Publishing authenticates through npm trusted publishing without a stored token.
 The pipeline never edits versions, creates commits or tags, or publishes directly
@@ -46,15 +63,10 @@ from a branch.
 The [CI workflow](../.github/workflows/ci.yml) runs for pushes to `main`, pull
 requests, and manual verification through Actions → CI → Run workflow.
 Manual runs verify only, even when a tag is selected.
-The separate [Publish workflow](../.github/workflows/publish.yml) runs for `v*`
-tag pushes. After validating the tag, it calls the reusable CI workflow and
-waits for every gate before publishing the verified build.
-It has no manual trigger.
-Publication requires a push that creates a new `v*` tag;
-updates to existing tags and tag deletions cannot publish. The tag must match
-the package version, and that version must not already exist on npm.
-The workflow checks GitHub's [push event fields](https://docs.github.com/en/webhooks/webhook-events-and-payloads#push)
-before tag verification; downstream jobs depend on that job succeeding.
+Neither the Release nor Publish workflow has a manual workflow trigger. To
+publish, push the reviewed `vX.Y.Z` tag and approve the production deployment in
+the resulting Release workflow run. Creating a release manually through GitHub
+does not start npm publication.
 See [GitHub deployment protection](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments).
 
 For a local release rehearsal, use Node 24 LTS, install REUSE 6.2.0, run `npm ci`,

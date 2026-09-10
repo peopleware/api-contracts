@@ -136,7 +136,7 @@ representative OpenAPI 3.1/3.2 documents are snapshot tested.
 ## Development
 
 Use Node 24 LTS and npm. `npm ci` installs the locked toolchain.
-Both GitHub workflows read `.nvmrc` and select the latest available Node 24 release.
+The GitHub workflows read `.nvmrc` and select the latest available Node 24 release.
 
 | Command                    | Purpose                                                                  |
 | -------------------------- | ------------------------------------------------------------------------ |
@@ -157,13 +157,17 @@ Both GitHub workflows read `.nvmrc` and select the latest available Node 24 rele
 `npm run ci:check-production-vulnerabilities` audits production dependencies using
 the locked `better-npm-audit` tool. It also runs as part of `npm run verify`.
 
-GitHub Actions runs independent quality, package, license and Dependency Audit jobs for PRs, `main`,
-version tags and manual `CI` workflow runs. The separate
-[Publish workflow](.github/workflows/publish.yml) handles new version tags and
-calls the reusable [CI workflow](.github/workflows/ci.yml) for the same gates;
-the verified package build is handed directly to the production deployment,
-which requires environment approval and publishes using npm trusted publishing.
-No branch build or manual verification run publishes.
+GitHub Actions runs independent quality, package, license and Dependency Audit jobs
+for PRs, `main`, releases and manual `CI` workflow runs. The
+[Release workflow](.github/workflows/release.yml) handles new `v*` tags and creates
+GitHub releases with the built-in workflow token, using the matching changelog
+entry as the description. It then calls the reusable
+[Publish workflow](.github/workflows/publish.yml), which validates the release tag,
+calls the reusable [CI workflow](.github/workflows/ci.yml), and hands the verified
+package build directly to the production deployment. Publication requires
+environment approval and uses npm trusted publishing. No repository release token
+or npm token is stored. No branch build, manually created GitHub release, or manual
+verification run publishes.
 
 Category paths, exported names, component IDs, brands and accepted wire values
 are public API. Additive schemas are minor releases. Validation, branding or
