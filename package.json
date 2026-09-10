@@ -1,7 +1,7 @@
 {
   "name": "@ppwcode/api-contracts",
   "version": "0.1.1",
-  "description": "Canonical Zod schemas and inferred types for reusable API contracts",
+  "description": "Collection of common reusable schemas for OpenAPI specs and TypeScript types",
   "scripts": {
     "build": "tsdown && node scripts/banner.mjs && node scripts/generate-schemas.mjs",
     "lint": "eslint .",
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/peopleware/api-contracts.git"
+    "url": "https://github.com/peopleware/api-contracts"
   },
   "keywords": [],
   "author": {
@@ -36,9 +36,9 @@
   "license": "Apache-2.0",
   "type": "module",
   "bugs": {
-    "url": "https://bitbucket.org/peopleware/api-contracts/issues"
+    "url": "https://github.com/peopleware/api-contracts/issues"
   },
-  "homepage": "https://bitbucket.org/peopleware/api-contracts#readme",
+  "homepage": "https://github.com/peopleware/api-contracts#readme",
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
     "@eslint/js": "^10.0.1",
