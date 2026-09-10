@@ -1,7 +1,7 @@
 // Copyright 2026 PeopleWare N.V.
 // SPDX-License-Identifier: Apache-2.0
 import { execFileSync } from "node:child_process";
-import { mkdirSync, readFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync } from "node:fs";
 const npm = process.platform === "win32" ? "npm.cmd" : "npm";
 mkdirSync("artifacts", { recursive: true });
 const result = JSON.parse(
@@ -14,15 +14,7 @@ const { name, version } = JSON.parse(readFileSync("package.json", "utf8"));
 if (result.name !== name || result.version !== version)
   throw new Error("Unexpected package identity");
 const paths = result.files.map((file) => file.path);
-for (const path of paths) {
-  if (
-    !/^(LICENSE|NOTICE|README\.md|package\.json|dist\/(string|time|be)\/index\.(js|cjs|d\.ts|d\.cts))$/.test(
-      path,
-    )
-  )
-    throw new Error("Unexpected archive file: " + path);
-}
-for (const required of [
+const requiredPaths = [
   "LICENSE",
   "NOTICE",
   "README.md",
@@ -32,7 +24,18 @@ for (const required of [
       (extension) => "dist/" + category + "/index." + extension,
     ),
   ),
-]) {
+  ...readdirSync("dist/schemas")
+    .filter((file) => file.endsWith(".yaml"))
+    .map((file) => "dist/schemas/" + file),
+];
+for (const path of paths) {
+  if (
+    !requiredPaths.includes(path) &&
+    !/^dist\/schemas\/[^/]+\.yaml$/.test(path)
+  )
+    throw new Error("Unexpected archive file: " + path);
+}
+for (const required of requiredPaths) {
   if (!paths.includes(required))
     throw new Error("Missing archive file: " + required);
 }
