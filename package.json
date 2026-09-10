@@ -1,6 +1,6 @@
 {
   "name": "@ppwcode/api-contracts",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Collection of common reusable schemas for OpenAPI specs and TypeScript types",
   "scripts": {
     "build": "tsdown && node scripts/banner.mjs && node scripts/generate-schemas.mjs && node scripts/generate-openapi-example.mjs",
