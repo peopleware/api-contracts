@@ -46,8 +46,12 @@ settings in `package.json`. npm rejects an already published package name and
 version.
 
 If automatic release creation fails, rerun the failed Release job. If npm
-publication fails, rerun the failed jobs in the Release workflow after resolving
-the cause. Both workflow files must be included in the commit being released.
+publication fails, either rerun the failed jobs in the Release workflow or run
+Actions → Publish release to NPM → Run workflow after resolving the cause. For a
+manual run, select the published release tag under **Use workflow from**. The
+workflow rejects branch selections, verifies that the tag's GitHub release is
+published, and repeats the same verification and production approval flow. The
+workflow files must be included in the commit being released.
 
 Add the target version's changelog entry before running `npm version <version>`
 (or `npm version <version> --no-git-tag-version` when preparing a PR).
@@ -63,10 +67,11 @@ from a branch.
 The [CI workflow](../.github/workflows/ci.yml) runs for pushes to `main`, pull
 requests, and manual verification through Actions → CI → Run workflow.
 Manual runs verify only, even when a tag is selected.
-Neither the Release nor Publish workflow has a manual workflow trigger. To
-publish, push the reviewed `vX.Y.Z` tag and approve the production deployment in
-the resulting Release workflow run. Creating a release manually through GitHub
-does not start npm publication.
+To publish normally, push the reviewed `vX.Y.Z` tag and approve the production
+deployment in the resulting Release workflow run. Creating a release manually
+through GitHub does not start npm publication by itself; run the Publish workflow
+and select that release's tag under **Use workflow from** when manual publication
+is intended.
 See [GitHub deployment protection](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments).
 
 For a local release rehearsal, use Node 24 LTS, install REUSE 6.2.0, run `npm ci`,

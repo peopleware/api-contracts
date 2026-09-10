@@ -166,8 +166,9 @@ entry as the description. It then calls the reusable
 calls the reusable [CI workflow](.github/workflows/ci.yml), and hands the verified
 package build directly to the production deployment. Publication requires
 environment approval and uses npm trusted publishing. No repository release token
-or npm token is stored. No branch build, manually created GitHub release, or manual
-verification run publishes.
+or npm token is stored. A failed publication can be retried by running the Publish
+workflow manually and selecting the published release tag under **Use workflow
+from**. No branch build or manual CI verification run publishes.
 
 Category paths, exported names, component IDs, brands and accepted wire values
 are public API. Additive schemas are minor releases. Validation, branding or
