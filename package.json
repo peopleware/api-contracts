@@ -1,6 +1,6 @@
 {
   "name": "@ppwcode/api-contracts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Canonical Zod schemas and inferred types for reusable API contracts",
   "scripts": {
     "build": "tsdown && node scripts/banner.mjs && node scripts/generate-schemas.mjs",
