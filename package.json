@@ -21,7 +21,7 @@
     "release:pack": "node scripts/check-tag.mjs && npm run verify && node scripts/check-unpublished.mjs && node scripts/pack.mjs",
     "format": "prettier --write src tests scripts docs .github *.ts *.js *.json *.md",
     "format:check": "prettier --check src tests scripts docs .github *.ts *.js *.json *.md",
-    "preversion": "npm run verify:quality",
+    "preversion": "node scripts/preversion.mjs",
     "version": "node scripts/check-changelog.mjs"
   },
   "repository": {
