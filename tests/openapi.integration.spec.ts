@@ -1,6 +1,9 @@
 // Copyright 2026 PeopleWare N.V.
 // SPDX-License-Identifier: Apache-2.0
 import { expect, test } from "vitest";
+import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
+import { parse } from "yaml";
 import { createDocument } from "zod-openapi";
 import { z } from "zod";
 import {
@@ -51,5 +54,13 @@ test.each(["3.1.0", "3.2.0"] as const)(
       "TrimmedString",
     ]);
     expect(document).toMatchSnapshot();
+    if (openapi === "3.1.0") {
+      const path = "@ppwcode/api-contracts/openapi-example.yaml";
+      const resolved = createRequire(import.meta.url).resolve(path);
+      expect(new URL(import.meta.resolve(path))).toEqual(
+        new URL("../dist/openapi-example.yaml", import.meta.url),
+      );
+      expect(parse(readFileSync(resolved, "utf8"))).toEqual(document);
+    }
   },
 );

@@ -67,6 +67,14 @@ fixtures and restrict storage and access to what your application requires.
 
 ## JSON Schema and OpenAPI
 
+`npm run build` also generates a complete OpenAPI 3.1 example at
+`dist/openapi-example.yaml`. Open it in an OpenAPI viewer to explore a
+`GET /example` response composed from all six canonical contracts, with reusable
+component schemas and their metadata. The spec is self-contained and included in
+the published package at `@ppwcode/api-contracts/openapi-example.yaml`; resolve it
+with `import.meta.resolve()` or `require.resolve()` to read the YAML file.
+Its generator is [scripts/generate-openapi-example.mjs](scripts/generate-openapi-example.mjs).
+
 `npm run build` generates standalone YAML files in `dist/schemas/`, included in
 the published package. Each file contains JSON Schema Draft 2020-12 and is named
 after its canonical component ID: `TrimmedString`, `DateOnly`,

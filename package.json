@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Collection of common reusable schemas for OpenAPI specs and TypeScript types",
   "scripts": {
-    "build": "tsdown && node scripts/banner.mjs && node scripts/generate-schemas.mjs",
+    "build": "tsdown && node scripts/banner.mjs && node scripts/generate-schemas.mjs && node scripts/generate-openapi-example.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest --exclude \"**/*.integration.spec.ts\"",
@@ -68,6 +68,7 @@
     "README.md"
   ],
   "exports": {
+    "./*.yaml": "./dist/*.yaml",
     "./schemas/*.yaml": "./dist/schemas/*.yaml",
     "./*": {
       "import": {
