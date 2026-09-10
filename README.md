@@ -152,7 +152,7 @@ Both GitHub workflows read `.nvmrc` and select the latest available Node 24 rele
 | `npm run license:check`    | REUSE lint (install REUSE 6.2.0 first)                                   |
 | `npm run license:docker`   | License check using `fsfe/reuse:6.2.0`                                   |
 | `npm run verify`           | All quality, package and license gates                                   |
-| `npm run release:pack`     | Verify matching `RELEASE_TAG`, all gates, npm availability and archive |
+| `npm run release:pack`     | Verify matching `RELEASE_TAG`, all gates, then create an archive |
 
 `npm run ci:check-production-vulnerabilities` audits production dependencies using
 the locked `better-npm-audit` tool. It also runs as part of `npm run verify`.
@@ -161,8 +161,8 @@ GitHub Actions runs independent quality, package, license and Dependency Audit j
 version tags and manual `CI` workflow runs. The separate
 [Publish workflow](.github/workflows/publish.yml) handles new version tags and
 calls the reusable [CI workflow](.github/workflows/ci.yml) for the same gates;
-the package build is handed to the tarball step as an artifact, then the exact
-tarball is handed to a production deployment requiring environment approval.
+the verified package build is handed directly to the production deployment,
+which requires environment approval and publishes using npm trusted publishing.
 No branch build or manual verification run publishes.
 
 Category paths, exported names, component IDs, brands and accepted wire values

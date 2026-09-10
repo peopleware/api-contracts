@@ -15,7 +15,7 @@ const section = sections.find((section) => {
 });
 if (!section) {
   console.error(
-    '\x1b[31m' + `Error: CHANGELOG.md must contain a ## ${version} section.` + '\x1b[0m',
+    '\x1b[31m' + `❌ Error: CHANGELOG.md must contain a ## ${version} section.` + '\x1b[0m',
   );
   process.exit(1);
 }
@@ -28,7 +28,7 @@ const description = section
   .trim();
 if (!description) {
   console.error(
-    '\x1b[31m' + `Error: CHANGELOG.md must describe the changes for ${version}.` + '\x1b[0m'
+    '\x1b[31m' + `❌ Error: CHANGELOG.md must describe the changes for ${version}.` + '\x1b[0m'
   );
   process.exit(1);
 }

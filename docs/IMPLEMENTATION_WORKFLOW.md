@@ -139,7 +139,7 @@ run, and any unresolved verification limitations.
 Follow [release setup and operation](RELEASING.md) for repository controls,
 version and changelog checks, tag creation, local packaging rehearsal, credential
 handling, and manual production publication. Branch builds verify changes;
-publication uses the exact tarball verified by the tag pipeline.
+publication uses the package build verified by the tag pipeline.
 
 Complete implementation work with a reviewable change. When release execution is
 also in scope, complete the applicable release steps and report their outcome.
