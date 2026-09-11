@@ -14,6 +14,7 @@
     "skipLibCheck": true,
     "noEmit": true,
     "paths": {
+      "@ppwcode/api-contracts/money": ["./src/money/index.ts"],
       "@ppwcode/api-contracts/be": ["./src/be/index.ts"],
       "@ppwcode/api-contracts/string": ["./src/string/index.ts"],
       "@ppwcode/api-contracts/time": ["./src/time/index.ts"]

@@ -45,7 +45,24 @@ const result = BelgianEnterpriseNumberSchema.safeParse("0123.456.749");
 | `/be`     | `BelgianSocialSecurityNumberSchema`, `BelgianSocialSecurityNumber` | 11 digits; pre-2000 or post-1999 modulo-97                           |
 | `/be`     | `BelgianEnterpriseNumberSchema`, `BelgianEnterpriseNumber`         | 10 digits, first digit 0 or 1; modulo-97                             |
 | `/be`     | `BelgianVatNumberSchema`, `BelgianVatNumber`                       | Uppercase `BE` plus a valid enterprise-number structure and checksum |
+| `/money`  | `IbanSchema`, `Iban`                                               | Uppercase IBAN; 69 PPWCode country formats and MOD 97-10 checksum    |
 | `/be`     | `BelgianIbanSchema`, `BelgianIban`                                 | Uppercase `BE` plus 14 digits; ISO 13616 modulo-97                   |
+
+`IbanSchema` is available from `@ppwcode/api-contracts/money`. Its country
+lengths and BBAN patterns follow the supplied `PPWCode.Util.Validation.IV.IBAN`
+class (69 countries); this is a fixed compatibility table, not a live IBAN
+registry. The [PPWCode.vNext documentation](https://context7.com/peopleware/net-ppwcode-vnext/llms.txt)
+describes its country and MOD 97-10 checks. Unlike the C# identification class,
+this contract accepts only the canonical electronic form and does not normalize
+paper formatting. Country structures are included in generated JSON Schema;
+the checksum requires runtime validation. `Iban` and `BelgianIban` are distinct
+brands; parse a value with the desired schema to obtain that type.
+
+```ts
+import { IbanSchema } from "@ppwcode/api-contracts/money";
+
+IbanSchema.parse("GB82WEST12345698765432");
+```
 
 No schema trims, changes case, removes separators, or otherwise transforms input.
 Only identifiers are branded. Parse untrusted strings to obtain branded values;
@@ -69,7 +86,7 @@ fixtures and restrict storage and access to what your application requires.
 
 `npm run build` also generates a complete OpenAPI 3.1 example at
 `dist/openapi-example.yaml`. Open it in an OpenAPI viewer to explore a
-`GET /example` response composed from all six canonical contracts, with reusable
+`GET /example` response composed from all seven canonical contracts, with reusable
 component schemas and their metadata. The spec is self-contained and included in
 the published package at `@ppwcode/api-contracts/openapi-example.yaml`; resolve it
 with `import.meta.resolve()` or `require.resolve()` to read the YAML file.
@@ -78,8 +95,8 @@ Its generator is [scripts/generate-openapi-example.mjs](scripts/generate-openapi
 `npm run build` generates standalone YAML files in `dist/schemas/`, included in
 the published package. Each file contains JSON Schema Draft 2020-12 and is named
 after its canonical component ID: `TrimmedString`, `DateOnly`,
-`BelgianSocialSecurityNumber`, `BelgianEnterpriseNumber`, `BelgianVatNumber`, and
-`BelgianIban`. Aliases share their canonical file.
+`BelgianSocialSecurityNumber`, `BelgianEnterpriseNumber`, `BelgianVatNumber`,
+`BelgianIban`, and `Iban`. Aliases share their canonical file.
 
 Consumers can resolve a file with
 `import.meta.resolve("@ppwcode/api-contracts/schemas/DateOnly.yaml")` or
@@ -180,7 +197,7 @@ from**. No branch build or manual CI verification run publishes.
 
 Category paths, exported names, component IDs, brands and accepted wire values
 are public API. Additive schemas are minor releases. Validation, branding or
-import-path changes require a major release. Future `/number`, `/money` and
+import-path changes require a major release. Future `/number` and
 `/personalia` entrypoints are reserved and not currently exported.
 
 ## Contributing

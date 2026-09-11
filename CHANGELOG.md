@@ -3,6 +3,12 @@
 
 # Changelog
 
+## Unreleased
+
+### Features
+
+- Add branded `IbanSchema` / `Iban` under `/money`, based on the PPWCode IBAN class's 69 country formats and modulo-97 validation, including generated JSON Schema and OpenAPI support. This is an additive minor-release change.
+
 ## 0.2.0
 
 ### Features

@@ -1,6 +1,7 @@
 // Copyright 2026 PeopleWare N.V.
 // SPDX-License-Identifier: Apache-2.0
 import { expectTypeOf, test } from "vitest";
+import type { Iban } from "../src/money/index.js";
 import type {
   BelgianSocialSecurityNumber,
   Niss,
@@ -14,6 +15,12 @@ import type {
 import type { TrimmedString } from "../src/string/index.js";
 import type { DateOnly } from "../src/time/index.js";
 test("aliases are identical; identifiers are distinct brands", () => {
+  expectTypeOf<string>().not.toExtend<Iban>();
+  expectTypeOf<Iban>().not.toExtend<BelgianIban>();
+  expectTypeOf<BelgianIban>().not.toExtend<Iban>();
+  expectTypeOf<Iban>().not.toExtend<BelgianVatNumber>();
+  expectTypeOf<Iban>().not.toExtend<BelgianEnterpriseNumber>();
+  expectTypeOf<Iban>().not.toExtend<BelgianSocialSecurityNumber>();
   expectTypeOf<Niss>().toEqualTypeOf<BelgianSocialSecurityNumber>();
   expectTypeOf<Insz>().toEqualTypeOf<Niss>();
   expectTypeOf<KboNumber>().toEqualTypeOf<BelgianEnterpriseNumber>();

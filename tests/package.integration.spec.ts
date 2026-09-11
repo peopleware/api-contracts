@@ -9,7 +9,7 @@ import { z } from "zod";
 const require = createRequire(import.meta.url);
 test("exposes YAML for every canonical schema through package subpaths", async () => {
   const ids = new Set<string>();
-  for (const category of ["string", "time", "be"]) {
+  for (const category of ["string", "time", "be", "money"]) {
     const exports = await import(
       /* @vite-ignore */ `@ppwcode/api-contracts/${category}`
     );
@@ -31,7 +31,7 @@ test("exposes YAML for every canonical schema through package subpaths", async (
   ).toEqual([...ids].map((id) => `${id}.yaml`).sort());
 });
 
-test.each(["string", "time", "be"])(
+test.each(["string", "time", "be", "money"])(
   "loads %s through ESM and CommonJS",
   async (category) => {
     const esm = await import(
@@ -57,7 +57,7 @@ test("does not export a root entrypoint", () => {
 
 test.each([
   "/number",
-  "/money",
+  "/money/_util/iban-country-patterns",
   "/personalia",
   "/_util/modulo-97",
   "/dist/be/index.js",

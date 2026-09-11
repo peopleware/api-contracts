@@ -2,10 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 import { expect, test } from "vitest";
 import { z } from "zod";
+import { IbanSchema } from "../src/money/index.js";
 import * as be from "../src/be/index.js";
 import { TrimmedStringSchema } from "../src/string/index.js";
 import { DateOnlySchema } from "../src/time/index.js";
 const schemas = [
+  IbanSchema,
   TrimmedStringSchema,
   DateOnlySchema,
   be.BelgianSocialSecurityNumberSchema,

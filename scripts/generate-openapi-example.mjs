@@ -13,6 +13,7 @@ import {
 } from "@ppwcode/api-contracts/be";
 import { TrimmedStringSchema } from "@ppwcode/api-contracts/string";
 import { DateOnlySchema } from "@ppwcode/api-contracts/time";
+import { IbanSchema } from "@ppwcode/api-contracts/money";
 
 const document = createDocument({
   openapi: "3.1.0",
@@ -31,7 +32,8 @@ const document = createDocument({
                   enterprise: BelgianEnterpriseNumberSchema,
                   niss: BelgianSocialSecurityNumberSchema,
                   vat: BelgianVatNumberSchema,
-                  iban: BelgianIbanSchema,
+                  belgianIban: BelgianIbanSchema,
+                  iban: IbanSchema,
                 }),
               },
             },

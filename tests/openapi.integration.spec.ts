@@ -14,6 +14,7 @@ import {
 } from "@ppwcode/api-contracts/be";
 import { TrimmedStringSchema } from "@ppwcode/api-contracts/string";
 import { DateOnlySchema } from "@ppwcode/api-contracts/time";
+import { IbanSchema } from "@ppwcode/api-contracts/money";
 test.each(["3.1.0", "3.2.0"] as const)(
   "generates OpenAPI %s using packaged schemas",
   (openapi) => {
@@ -34,7 +35,8 @@ test.each(["3.1.0", "3.2.0"] as const)(
                       enterprise: BelgianEnterpriseNumberSchema,
                       niss: BelgianSocialSecurityNumberSchema,
                       vat: BelgianVatNumberSchema,
-                      iban: BelgianIbanSchema,
+                      belgianIban: BelgianIbanSchema,
+                      iban: IbanSchema,
                     }),
                   },
                 },
@@ -51,6 +53,7 @@ test.each(["3.1.0", "3.2.0"] as const)(
       "BelgianSocialSecurityNumber",
       "BelgianVatNumber",
       "DateOnly",
+      "Iban",
       "TrimmedString",
     ]);
     expect(document).toMatchSnapshot();

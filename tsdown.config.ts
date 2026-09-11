@@ -3,6 +3,7 @@
 import { defineConfig } from "tsdown";
 export default defineConfig({
   entry: {
+    "money/index": "src/money/index.ts",
     "string/index": "src/string/index.ts",
     "time/index": "src/time/index.ts",
     "be/index": "src/be/index.ts",
