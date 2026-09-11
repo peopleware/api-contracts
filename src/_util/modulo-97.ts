@@ -6,6 +6,7 @@ export function modulo97(digits: string): number {
   for (const digit of digits) remainder = (remainder * 10 + Number(digit)) % 97;
   return remainder;
 }
+
 export function hasBelgianChecksum(digits: string): boolean {
   return 97 - modulo97(digits.slice(0, -2)) === Number(digits.slice(-2));
 }

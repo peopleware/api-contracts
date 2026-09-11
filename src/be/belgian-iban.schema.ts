@@ -1,7 +1,7 @@
 // Copyright 2026 PeopleWare N.V.
 // SPDX-License-Identifier: Apache-2.0
 import { z } from "zod";
-import { modulo97 } from "./internal/modulo-97.js";
+import { modulo97 } from "../_util/modulo-97.js";
 
 export const BelgianIbanSchema = z
   .string()

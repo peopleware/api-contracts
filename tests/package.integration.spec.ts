@@ -59,7 +59,7 @@ test.each([
   "/number",
   "/money",
   "/personalia",
-  "/be/internal/modulo-97",
+  "/_util/modulo-97",
   "/dist/be/index.js",
 ])("cannot load unbuilt path %s", (path) => {
   expect(() => require(`@ppwcode/api-contracts${path}`)).toThrow(

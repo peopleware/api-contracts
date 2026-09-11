@@ -1,7 +1,7 @@
 // Copyright 2026 PeopleWare N.V.
 // SPDX-License-Identifier: Apache-2.0
 import { z } from "zod";
-import { hasBelgianChecksum } from "./internal/modulo-97.js";
+import { hasBelgianChecksum } from "../_util/modulo-97.js";
 
 export const BelgianSocialSecurityNumberSchema = z
   .string()
