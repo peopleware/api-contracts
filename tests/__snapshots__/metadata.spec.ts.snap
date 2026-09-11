@@ -100,6 +100,26 @@ exports[`JSON Schema metadata for Non-empty string without leading or tra… > T
 }
 `;
 
+exports[`JSON Schema metadata for Telephone number in canonical E.164 for… > TelephoneNumber 1`] = `
+{
+  "$defs": {
+    "TelephoneNumber": {
+      "description": "Telephone number in canonical E.164 format (+ followed by 2 to 15 digits) or as a 9- or 10-digit local number beginning with 0. Input is never transformed.",
+      "examples": [
+        "+32479394232",
+        "033858885",
+        "0479394232",
+      ],
+      "pattern": "^(?:\\+[1-9][0-9]{1,14}|0[0-9]{8,9})$",
+      "title": "Telephone number",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/TelephoneNumber",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
 exports[`JSON Schema metadata for Uppercase BE followed by 14 digits with… > BelgianIban 1`] = `
 {
   "$defs": {

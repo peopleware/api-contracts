@@ -12,7 +12,7 @@ import type {
   BelgianVatNumber,
   BelgianIban,
 } from "../src/be/index.js";
-import type { TrimmedString } from "../src/string/index.js";
+import type { TelephoneNumber, TrimmedString } from "../src/string/index.js";
 import type { DateOnly } from "../src/time/index.js";
 test("aliases are identical; identifiers are distinct brands", () => {
   expectTypeOf<string>().not.toExtend<Iban>();
@@ -27,6 +27,7 @@ test("aliases are identical; identifiers are distinct brands", () => {
   expectTypeOf<CbeNumber>().toEqualTypeOf<KboNumber>();
   expectTypeOf<TrimmedString>().toEqualTypeOf<string>();
   expectTypeOf<DateOnly>().toEqualTypeOf<string>();
+  expectTypeOf<string>().not.toExtend<TelephoneNumber>();
   expectTypeOf<string>().not.toExtend<BelgianIban>();
   expectTypeOf<string>().not.toExtend<BelgianSocialSecurityNumber>();
   expectTypeOf<string>().not.toExtend<BelgianEnterpriseNumber>();

@@ -41,6 +41,7 @@ const result = BelgianEnterpriseNumberSchema.safeParse("0123.456.749");
 | Category  | Schema and inferred type                                           | Accepted input                                                       |
 | --------- | ------------------------------------------------------------------ | -------------------------------------------------------------------- |
 | `/string` | `TrimmedStringSchema`, `TrimmedString`                             | Non-empty string without leading or trailing JavaScript whitespace   |
+| `/string` | `TelephoneNumberSchema`, `TelephoneNumber`                         | E.164 number or 9–10 digit local number beginning with `0`           |
 | `/time`   | `DateOnlySchema`, `DateOnly`                                       | Calendar-valid `YYYY-MM-DD` using `z.iso.date()`                     |
 | `/be`     | `BelgianSocialSecurityNumberSchema`, `BelgianSocialSecurityNumber` | 11 digits; pre-2000 or post-1999 modulo-97                           |
 | `/be`     | `BelgianEnterpriseNumberSchema`, `BelgianEnterpriseNumber`         | 10 digits, first digit 0 or 1; modulo-97                             |
@@ -86,7 +87,7 @@ fixtures and restrict storage and access to what your application requires.
 
 `npm run build` also generates a complete OpenAPI 3.1 example at
 `dist/openapi-example.yaml`. Open it in an OpenAPI viewer to explore a
-`GET /example` response composed from all seven canonical contracts, with reusable
+`GET /example` response composed from all eight canonical contracts, with reusable
 component schemas and their metadata. The spec is self-contained and included in
 the published package at `@ppwcode/api-contracts/openapi-example.yaml`; resolve it
 with `import.meta.resolve()` or `require.resolve()` to read the YAML file.
@@ -94,7 +95,7 @@ Its generator is [scripts/generate-openapi-example.mjs](scripts/generate-openapi
 
 `npm run build` generates standalone YAML files in `dist/schemas/`, included in
 the published package. Each file contains JSON Schema Draft 2020-12 and is named
-after its canonical component ID: `TrimmedString`, `DateOnly`,
+after its canonical component ID: `TrimmedString`, `TelephoneNumber`, `DateOnly`,
 `BelgianSocialSecurityNumber`, `BelgianEnterpriseNumber`, `BelgianVatNumber`,
 `BelgianIban`, and `Iban`. Aliases share their canonical file.
 

@@ -4,3 +4,7 @@ export {
   TrimmedStringSchema,
   type TrimmedString,
 } from "./trimmed-string.schema.js";
+export {
+  TelephoneNumberSchema,
+  type TelephoneNumber,
+} from "./telephone-number.schema.js";
