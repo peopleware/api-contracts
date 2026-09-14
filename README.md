@@ -164,20 +164,20 @@ representative OpenAPI 3.1/3.2 documents are snapshot tested.
 Use Node 24 LTS and npm. `npm ci` installs the locked toolchain.
 The GitHub workflows read `.nvmrc` and select the latest available Node 24 release.
 
-| Command                    | Purpose                                                                  |
-| -------------------------- | ------------------------------------------------------------------------ |
-| `npm test`                 | Watch unit and metadata tests                                            |
-| `npm run test:unit`        | Unit, property and metadata tests                                        |
-| `npm run test:types`       | Identifier and alias type assertions                                     |
-| `npm run test:coverage`    | Unit tests, coverage and JUnit report                                    |
-| `npm run build`            | ESM/CommonJS, declarations and standalone schema YAML files               |
-| `npm run test:integration` | OpenAPI tests against `dist` (build first)                               |
-| `npm run test:ci`          | All tests (build first)                                                  |
-| `npm run verify:quality`   | Lint, strict types, unit coverage and type tests                         |
-| `npm run verify:package`   | Build, integration, publint, Are the Types Wrong, dry-run pack           |
-| `npm run license:check`    | REUSE lint (install REUSE 6.2.0 first)                                   |
-| `npm run license:docker`   | License check using `fsfe/reuse:6.2.0`                                   |
-| `npm run verify`           | All quality, package and license gates                                   |
+| Command                    | Purpose                                                          |
+| -------------------------- | ---------------------------------------------------------------- |
+| `npm test`                 | Watch unit and metadata tests                                    |
+| `npm run test:unit`        | Unit, property and metadata tests                                |
+| `npm run test:types`       | Identifier and alias type assertions                             |
+| `npm run test:coverage`    | Unit tests, coverage and JUnit report                            |
+| `npm run build`            | ESM/CommonJS, declarations and standalone schema YAML files      |
+| `npm run test:integration` | OpenAPI tests against `dist` (build first)                       |
+| `npm run test:ci`          | All tests (build first)                                          |
+| `npm run verify:quality`   | Lint, strict types, unit coverage and type tests                 |
+| `npm run verify:package`   | Build, integration, publint, Are the Types Wrong, dry-run pack   |
+| `npm run license:check`    | REUSE lint (install REUSE 6.2.0 first)                           |
+| `npm run license:docker`   | License check using `fsfe/reuse:6.2.0`                           |
+| `npm run verify`           | All quality, package and license gates                           |
 | `npm run release:pack`     | Verify matching `RELEASE_TAG`, all gates, then create an archive |
 
 `npm run ci:check-production-vulnerabilities` audits production dependencies using
