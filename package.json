@@ -15,7 +15,7 @@
     "ci:check-production-vulnerabilities": "npx better-npm-audit audit --production",
     "license:check": "reuse lint",
     "license:docker": "docker run --rm -v .:/data fsfe/reuse:6.2.0 lint",
-    "verify:quality": "npm run lint && npm run typecheck && npm run test:coverage && npm run test:types",
+    "verify:quality": "npm run lint && npm run format:check && npm run typecheck && npm run test:coverage && npm run test:types",
     "verify:package": "npm run build && npm run test:integration && publint && attw --pack --profile node16 && npm pack --dry-run",
     "verify": "npm run verify:quality && npm run verify:package && npm run license:check && npm run ci:check-production-vulnerabilities",
     "release:pack": "node scripts/check-tag.mjs && npm run verify && npm pack",
