@@ -2,33 +2,28 @@
 // SPDX-License-Identifier: Apache-2.0
 import { expect, test } from "vitest";
 import { z } from "zod";
-import { IbanSchema } from "../src/identity/banking/index.js";
-import * as be from "../src/identity/be/index.js";
-import {
-  TelephoneNumberSchema,
-  TrimmedStringSchema,
-} from "../src/value/string/index.js";
-import { DateOnlySchema } from "../src/value/time/index.js";
-const schemas = [
-  IbanSchema,
-  TrimmedStringSchema,
-  TelephoneNumberSchema,
-  DateOnlySchema,
-  be.BelgianSocialSecurityNumberSchema,
-  be.BelgianEnterpriseNumberSchema,
-  be.BelgianVatNumberSchema,
-  be.BelgianIbanSchema,
-];
-test.each(schemas)("JSON Schema metadata for $description", (schema) => {
+import { aliasGroups, schemas } from "./all-schemas.js";
+
+const schemaTests = schemas.map((schema) => {
+  const name = schema.meta()?.title ?? schema.meta()?.id;
+  return [name, schema] as const;
+});
+test.each(schemaTests)("JSON Schema metadata for %s", (_name, schema) => {
   expect(z.toJSONSchema(schema, { target: "draft-2020-12" })).toMatchSnapshot(
     schema.meta()?.id,
   );
   for (const example of schema.meta()?.examples ?? [])
     expect(schema.safeParse(example).success).toBe(true);
 });
-test("aliases share canonical instances", () => {
-  expect(be.NissSchema).toBe(be.BelgianSocialSecurityNumberSchema);
-  expect(be.InszSchema).toBe(be.NissSchema);
-  expect(be.KboNumberSchema).toBe(be.BelgianEnterpriseNumberSchema);
-  expect(be.CbeNumberSchema).toBe(be.KboNumberSchema);
-});
+
+const aliasTests = aliasGroups
+  .filter(({ exports }) => exports.length > 1)
+  .map(({ exports, names }) => [names, exports] as const);
+test.each(aliasTests)(
+  "Aliases share canonical instance: %s",
+  (_names, exports) => {
+    const canonical = exports[0]?.[1];
+    if (!canonical) throw new Error("Alias group has no canonical schema");
+    for (const [, alias] of exports.slice(1)) expect(alias).toBe(canonical);
+  },
+);

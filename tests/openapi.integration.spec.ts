@@ -6,15 +6,11 @@ import { createRequire } from "node:module";
 import { parse } from "yaml";
 import { createDocument } from "zod-openapi";
 import { z } from "zod";
-import {
-  BelgianEnterpriseNumberSchema,
-  BelgianSocialSecurityNumberSchema,
-  BelgianVatNumberSchema,
-  BelgianIbanSchema,
-} from "@ppwcode/api-contracts/identity/be";
-import { TrimmedStringSchema } from "@ppwcode/api-contracts/value/string";
-import { DateOnlySchema } from "@ppwcode/api-contracts/value/time";
-import { IbanSchema } from "@ppwcode/api-contracts/identity/banking";
+import { schemas } from "./all-schemas.js";
+
+const schemaProperties = Object.fromEntries(
+  schemas.map((schema) => [schema.meta()!.id!, schema]),
+);
 test.each(["3.1.0", "3.2.0"] as const)(
   "generates OpenAPI %s using packaged schemas",
   (openapi) => {
@@ -29,15 +25,7 @@ test.each(["3.1.0", "3.2.0"] as const)(
                 description: "Example",
                 content: {
                   "application/json": {
-                    schema: z.object({
-                      name: TrimmedStringSchema,
-                      date: DateOnlySchema,
-                      enterprise: BelgianEnterpriseNumberSchema,
-                      niss: BelgianSocialSecurityNumberSchema,
-                      vat: BelgianVatNumberSchema,
-                      belgianIban: BelgianIbanSchema,
-                      iban: IbanSchema,
-                    }),
+                    schema: z.object(schemaProperties),
                   },
                 },
               },
@@ -47,15 +35,9 @@ test.each(["3.1.0", "3.2.0"] as const)(
       },
     });
     expect(document.openapi).toBe(openapi);
-    expect(Object.keys(document.components?.schemas ?? {}).sort()).toEqual([
-      "BelgianEnterpriseNumber",
-      "BelgianIban",
-      "BelgianSocialSecurityNumber",
-      "BelgianVatNumber",
-      "DateOnly",
-      "Iban",
-      "TrimmedString",
-    ]);
+    expect(Object.keys(document.components?.schemas ?? {}).sort()).toEqual(
+      schemas.map((schema) => schema.meta()!.id!).sort(),
+    );
     expect(document).toMatchSnapshot();
     if (openapi === "3.1.0") {
       const path = "@ppwcode/api-contracts/openapi-example.yaml";
