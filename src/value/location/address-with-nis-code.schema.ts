@@ -2,21 +2,22 @@
 // SPDX-License-Identifier: Apache-2.0
 import { z } from "zod";
 
-import { CountrySchema } from "./country.schema.js";
 import { TrimmedStringSchema } from "../string/trimmed-string.schema.js";
 
-export const AddressSchema = z
+export const AddressWithNisCodeSchema = z
   .object({
     street: TrimmedStringSchema.nullable(),
     houseNumber: TrimmedStringSchema.nullable(),
     box: TrimmedStringSchema.nullable(),
     zipCode: TrimmedStringSchema.nullable(),
     city: TrimmedStringSchema.nullable(),
-    country: CountrySchema.nullable(),
+    countryNisCode: z.number().int().min(100).max(999).nullable(),
   })
   .passthrough()
   .meta({
-    id: "Address",
+    id: "AddressWithNisCode",
+    description:
+      "The `countryNisCode` refers to the current Belgian NIS country codes published by [Statbel](https://statbel.fgov.be/nl/over-statbel/methodologie/classificaties/landencodes).",
     examples: [
       {
         street: "Duwijckstraat",
@@ -24,8 +25,8 @@ export const AddressSchema = z
         box: null,
         zipCode: "2500",
         city: "Lier",
-        country: "BE",
+        countryNisCode: 150,
       },
     ],
   });
-export type Address = z.infer<typeof AddressSchema>;
+export type AddressWithNisCode = z.infer<typeof AddressWithNisCodeSchema>;
