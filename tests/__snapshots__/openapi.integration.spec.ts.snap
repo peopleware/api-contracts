@@ -6179,6 +6179,40 @@ terms:
         ],
         "type": "object",
       },
+      "PersonName": {
+        "additionalProperties": {},
+        "description": "A person's first name, last name, and full name.",
+        "examples": [
+          {
+            "firstName": "Ada",
+            "fullName": "Ada Lovelace",
+            "lastName": "Lovelace",
+          },
+        ],
+        "properties": {
+          "firstName": {
+            "type": [
+              "string",
+              "null",
+            ],
+          },
+          "fullName": {
+            "type": [
+              "string",
+              "null",
+            ],
+          },
+          "lastName": {
+            "type": "string",
+          },
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "fullName",
+        ],
+        "type": "object",
+      },
       "PositiveMonetaryValue": {
         "additionalProperties": {},
         "description": "Representation of an \`amount\` of money, in the given \`currency\`, with the given \`decimals\`.
@@ -8204,6 +8238,9 @@ The advised approach is to never add decimals that have different decimals.",
                     "NonPositiveMonetaryValue": {
                       "$ref": "#/components/schemas/NonPositiveMonetaryValue",
                     },
+                    "PersonName": {
+                      "$ref": "#/components/schemas/PersonName",
+                    },
                     "PositiveMonetaryValue": {
                       "$ref": "#/components/schemas/PositiveMonetaryValue",
                     },
@@ -8299,6 +8336,7 @@ The advised approach is to never add decimals that have different decimals.",
                     "UUID",
                     "Mode",
                     "Gender",
+                    "PersonName",
                     "CacheControlNoCache",
                     "CacheControlPrivateImmutable",
                     "CommonResponseHeaders",
@@ -14553,6 +14591,40 @@ terms:
         ],
         "type": "object",
       },
+      "PersonName": {
+        "additionalProperties": {},
+        "description": "A person's first name, last name, and full name.",
+        "examples": [
+          {
+            "firstName": "Ada",
+            "fullName": "Ada Lovelace",
+            "lastName": "Lovelace",
+          },
+        ],
+        "properties": {
+          "firstName": {
+            "type": [
+              "string",
+              "null",
+            ],
+          },
+          "fullName": {
+            "type": [
+              "string",
+              "null",
+            ],
+          },
+          "lastName": {
+            "type": "string",
+          },
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "fullName",
+        ],
+        "type": "object",
+      },
       "PositiveMonetaryValue": {
         "additionalProperties": {},
         "description": "Representation of an \`amount\` of money, in the given \`currency\`, with the given \`decimals\`.
@@ -16578,6 +16650,9 @@ The advised approach is to never add decimals that have different decimals.",
                     "NonPositiveMonetaryValue": {
                       "$ref": "#/components/schemas/NonPositiveMonetaryValue",
                     },
+                    "PersonName": {
+                      "$ref": "#/components/schemas/PersonName",
+                    },
                     "PositiveMonetaryValue": {
                       "$ref": "#/components/schemas/PositiveMonetaryValue",
                     },
@@ -16673,6 +16748,7 @@ The advised approach is to never add decimals that have different decimals.",
                     "UUID",
                     "Mode",
                     "Gender",
+                    "PersonName",
                     "CacheControlNoCache",
                     "CacheControlPrivateImmutable",
                     "CommonResponseHeaders",
