@@ -21,7 +21,9 @@ releases and [Publish workflow](../.github/workflows/publish.yml) for npm public
 - Specify accepted canonical values, rejected values, runtime checks, schema and
   type names, aliases, category, component ID, and representative examples.
 - Preserve canonical input: validation never trims, removes separators, changes
-  case, or otherwise transforms values. Brand identifier types only.
+  case, or otherwise transforms values. Brand canonical primitive domain values
+  where accidental interchange would be dangerous or misleading; do not brand
+  structural object schemas.
 - Distinguish structural and checksum validity from registry membership or current
   registration. For NISS/INSZ, include BIS numbers without inferring or validating
   birth date or gender; use official NISS/INSZ terminology.

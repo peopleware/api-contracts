@@ -5,6 +5,7 @@ import { z } from "zod";
 export const QuarterSchema = z
   .string()
   .regex(new RegExp("^\\d{4}-(2[1-4])$", ""))
+  .brand<"Quarter">()
   .meta({
     id: "Quarter",
     description:

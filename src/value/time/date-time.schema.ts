@@ -10,6 +10,7 @@ export const DateTimeSchema = z
       "",
     ),
   )
+  .brand<"DateTime">()
   .meta({
     id: "DateTime",
     description:

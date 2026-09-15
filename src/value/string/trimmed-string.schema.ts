@@ -6,6 +6,7 @@ export const TrimmedStringSchema = z
   .string()
   .min(1)
   .regex(/^\S(?:[\s\S]*\S)?$(?![\s\S])/u)
+  .brand<"TrimmedString">()
   .meta({
     id: "TrimmedString",
     title: "Trimmed string",

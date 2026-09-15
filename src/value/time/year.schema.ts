@@ -5,6 +5,7 @@ import { z } from "zod";
 export const YearSchema = z
   .string()
   .regex(new RegExp("^\\d{4}$", ""))
+  .brand<"Year">()
   .meta({
     id: "Year",
     description:

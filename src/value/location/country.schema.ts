@@ -5,6 +5,7 @@ import { z } from "zod";
 export const CountrySchema = z
   .string()
   .regex(new RegExp("^[A-Z]{2}$", ""))
+  .brand<"Country">()
   .meta({
     id: "Country",
     description:

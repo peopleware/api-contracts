@@ -6,6 +6,7 @@ export const CleanedStringSchema = z
   .string()
   .min(1)
   .regex(new RegExp("^[a-zA-Z$_][a-zA-Z0-9$_]*$", ""))
+  .brand<"CleanedString">()
   .meta({
     id: "CleanedString",
     description:

@@ -7,6 +7,7 @@ export const SigedisIdSchema = z
   .refine((value) => value === value.trim(), { message: "Must be trimmed" })
   .length(24)
   .regex(new RegExp("^\\d{24}$", ""))
+  .brand<"SigedisId">()
   .meta({
     id: "SigedisId",
     description:

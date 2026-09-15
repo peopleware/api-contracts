@@ -6,6 +6,7 @@ export const StructureVersionSchema = z
   .number()
   .int()
   .min(1)
+  .brand<"StructureVersion">()
   .meta({
     id: "StructureVersion",
     description: "Version of the data structure of this resource type",

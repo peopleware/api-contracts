@@ -5,6 +5,7 @@ import { z } from "zod";
 export const CanonicalURISchema = z
   .string()
   .min(1)
+  .brand<"CanonicalURI">()
   .meta({
     id: "CanonicalURI",
     description:

@@ -7,6 +7,7 @@ export const ModeSchema = z
   .regex(
     /^production|simulation|automated-test-[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}|qa-\d+|acceptance-\d+|migration-\d{4}-((0[13578]|10|12)-(0[1-9]|[1-2]\d|30|31)|02-(0[1-9]|1\d|2[0-9])|(0[469]|11)-(0[1-9]|[1-2]\d|30))T([01]\d|2[0-3])(:[0-5]\d){2}Z|demo|dev-experiment$/,
   )
+  .brand<"Mode">()
   .meta({
     id: "Mode",
     examples: [

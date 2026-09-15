@@ -7,6 +7,9 @@
 
 ### Features
 
+- Brand canonical primitive domain values, including dates, currencies, URLs,
+  modes, and identifiers, while leaving structural object schemas unbranded.
+  This changes TypeScript assignability and requires a major release.
 - Add branded `TelephoneNumberSchema` / `TelephoneNumber` under `/string`, accepting E.164 and local telephone number formats.
 - Add branded `IbanSchema` / `Iban` under `/money`, based on the PPWCode IBAN class's 69 country formats and modulo-97 validation, including generated JSON Schema and OpenAPI support. This is an additive minor-release change.
 

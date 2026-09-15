@@ -9,6 +9,7 @@ export const StatusSchema = z
     z.literal("ERROR"),
     z.literal("UNREACHABLE"),
   ])
+  .brand<"Status">()
   .meta({
     id: "Status",
     description:

@@ -6,6 +6,7 @@ export const SearchTermSchema = z
   .string()
   .refine((value) => value === value.trim(), { message: "Must be trimmed" })
   .min(1)
+  .brand<"SearchTerm">()
   .meta({
     id: "SearchTerm",
     description:

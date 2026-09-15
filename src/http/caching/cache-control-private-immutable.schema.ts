@@ -4,6 +4,7 @@ import { z } from "zod";
 
 export const CacheControlPrivateImmutableSchema = z
   .literal("private, max-age=31536000, immutable")
+  .brand<"CacheControlPrivateImmutable">()
   .meta({
     id: "CacheControlPrivateImmutable",
     description:

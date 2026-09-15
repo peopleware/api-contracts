@@ -75,8 +75,12 @@ IbanSchema.parse("GB82WEST12345698765432");
 ```
 
 No schema trims, changes case, removes separators, or otherwise transforms input.
-Only identifiers are branded. Parse untrusted strings to obtain branded values;
-different identifier brands cannot be assigned to one another.
+Canonical primitive domain values are branded. Parse untrusted values with the
+corresponding schema to obtain the branded type; this prevents accidental
+interchange of values such as dates, currencies, URLs, modes, and identifiers.
+Structural object schemas are intentionally not branded, so they remain easy to
+compose and extend. Branding is a TypeScript-only distinction and has no effect
+on the wire representation, JSON Schema, or OpenAPI output.
 
 `NissSchema`/`Niss` and `InszSchema`/`Insz` alias the social security number.
 NISS means _numéro d’identification de la sécurité sociale_; INSZ means

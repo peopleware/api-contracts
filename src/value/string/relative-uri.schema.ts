@@ -5,6 +5,7 @@ import { z } from "zod";
 export const RelativeURISchema = z
   .string()
   .min(1)
+  .brand<"RelativeURI">()
   .meta({
     id: "RelativeURI",
     description: "relative URI",

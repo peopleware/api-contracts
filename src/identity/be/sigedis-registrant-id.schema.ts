@@ -8,6 +8,7 @@ export const SigedisRegistrantIdSchema = z
   .max(60)
   .refine((value) => value === value.trim(), { message: "Must be trimmed" })
   .regex(new RegExp("^[-A-Za-z0-9./]{1,60}$", ""))
+  .brand<"SigedisRegistrantId">()
   .meta({
     id: "SigedisRegistrantId",
     description:

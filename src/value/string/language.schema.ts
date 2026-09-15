@@ -5,6 +5,7 @@ import { z } from "zod";
 export const LanguageSchema = z
   .string()
   .regex(new RegExp("^[a-z]{2}(-[A-Z]{2})?$", ""))
+  .brand<"Language">()
   .meta({
     id: "Language",
     description:

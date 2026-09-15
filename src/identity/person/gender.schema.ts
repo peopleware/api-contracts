@@ -4,5 +4,6 @@ import { z } from "zod";
 
 export const GenderSchema = z
   .union([z.literal("F"), z.literal("M"), z.literal("X")])
+  .brand<"Gender">()
   .meta({ id: "Gender", examples: ["F", "M", "X"] });
 export type Gender = z.infer<typeof GenderSchema>;

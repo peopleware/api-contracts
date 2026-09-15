@@ -185,6 +185,7 @@ export const CurrencyCodeSchema = z
     z.literal("ZMW"),
     z.literal("ZWL"),
   ])
+  .brand<"CurrencyCode">()
   .meta({
     id: "CurrencyCode",
     description:

@@ -5,6 +5,7 @@ import { z } from "zod";
 export const CanonicalURIWithKnowledgeTimeSchema = z
   .string()
   .min(1)
+  .brand<"CanonicalURIWithKnowledgeTime">()
   .meta({
     id: "CanonicalURIWithKnowledgeTime",
     description:

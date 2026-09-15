@@ -5,6 +5,7 @@ import { z } from "zod";
 export const ToOneFromChiSchema = z
   .string()
   .min(1)
+  .brand<"ToOneFromChi">()
   .meta({
     id: "ToOneFromChi",
     description:

@@ -5,6 +5,7 @@ import { z } from "zod";
 export const MonthSchema = z
   .string()
   .regex(new RegExp("^\\d{4}-(0[1-9]|1[0-2])$", ""))
+  .brand<"Month">()
   .meta({
     id: "Month",
     description:

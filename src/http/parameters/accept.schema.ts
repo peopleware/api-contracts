@@ -5,6 +5,7 @@ import { z } from "zod";
 export const AcceptSchema = z
   .string()
   .regex(new RegExp("([^-;]*)(?:-([^;]*))?(?:;q=([0-9].[0-9]))?", ""))
+  .brand<"Accept">()
   .meta({
     id: "Accept",
     title: "accept",
