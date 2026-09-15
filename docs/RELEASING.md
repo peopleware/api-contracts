@@ -53,11 +53,12 @@ workflow rejects branch selections, verifies that the tag's GitHub release is
 published, and repeats the same verification and production approval flow. The
 workflow files must be included in the commit being released.
 
-Add the target version's changelog entry before running `npm version <version>`
-(or `npm version <version> --no-git-tag-version` when preparing a PR).
-The `version` lifecycle hook applies the same changelog check to the new version
-before npm creates a commit or tag. If the check fails, npm leaves `package.json`
-and `package-lock.json` updated. Correct the changelog and rerun with the explicit
+Keep the release notes under `## Unreleased` before running `npm version <version>`
+(or `npm version <version> --no-git-tag-version` when preparing a PR). The
+`version` lifecycle hook promotes that section to the new version heading and
+applies the same changelog check before npm creates a commit or tag. If the check
+fails, npm leaves `package.json`, `package-lock.json`, and possibly the promoted
+changelog heading updated. Correct the changelog and rerun with the explicit
 target version and `--allow-same-version`; do not repeat an incremental bump.
 
 Publishing authenticates through npm trusted publishing without a stored token.

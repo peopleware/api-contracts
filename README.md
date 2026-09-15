@@ -218,14 +218,16 @@ are public API. The package is organized beneath five top-level namespaces:
 Follow the [implementation workflow](docs/IMPLEMENTATION_WORKFLOW.md) when adding
 or changing contracts, entrypoints, or package infrastructure.
 
-Always use `npm version [major|minor|patch]` to bump the version when preparing a
+Keep unreleased changes under `## Unreleased` in [CHANGELOG.md](CHANGELOG.md),
+then use `npm version [major|minor|patch]` to bump the version when preparing a
 release, choosing one of `major`, `minor`, or `patch` (for example,
-`npm version patch`). Add and commit a matching `## X.Y.Z` entry with a change
-description in [CHANGELOG.md](CHANGELOG.md) first.
+`npm version patch`). The `version` lifecycle hook automatically promotes
+`## Unreleased` to the new `## X.Y.Z` heading and validates that it contains a
+change description.
 
 The command runs `verify:quality` before the bump, updates `package.json` and
-`package-lock.json`, checks the changelog for the new version, and creates the
-version commit and tag. When preparing the version update for a PR, use
+`package-lock.json`, updates and checks the changelog for the new version, and
+creates the version commit and tag. When preparing the version update for a PR, use
 `npm version [major|minor|patch] --no-git-tag-version` and include the updated
 version files in the PR.
 
