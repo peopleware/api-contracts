@@ -3066,6 +3066,25 @@ The advised approach is to never add decimals that have different decimals.",
 }
 `;
 
+exports[`JSON Schema metadata for Email address > EmailAddress 1`] = `
+{
+  "$defs": {
+    "EmailAddress": {
+      "description": "Email address accepted by the Zod email validator. Input is never transformed.",
+      "examples": [
+        "person@example.com",
+      ],
+      "format": "email",
+      "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+      "title": "Email address",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/EmailAddress",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
 exports[`JSON Schema metadata for Gender > Gender 1`] = `
 {
   "$defs": {

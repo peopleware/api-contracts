@@ -7,6 +7,7 @@
 
 ### Features
 
+- Add branded `EmailAddressSchema` / `EmailAddress` under `/string`.
 - Brand canonical primitive domain values, including dates, currencies, URLs,
   modes, and identifiers, while leaving structural object schemas unbranded.
   This changes TypeScript assignability and requires a major release.

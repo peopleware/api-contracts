@@ -1524,6 +1524,16 @@ The advised approach is to never add decimals that have different decimals.",
         ],
         "type": "object",
       },
+      "EmailAddress": {
+        "description": "Email address accepted by the Zod email validator. Input is never transformed.",
+        "examples": [
+          "person@example.com",
+        ],
+        "format": "email",
+        "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+        "title": "Email address",
+        "type": "string",
+      },
       "Gender": {
         "anyOf": [
           {
@@ -8125,6 +8135,9 @@ The advised approach is to never add decimals that have different decimals.",
                     "Decimal": {
                       "$ref": "#/components/schemas/Decimal",
                     },
+                    "EmailAddress": {
+                      "$ref": "#/components/schemas/EmailAddress",
+                    },
                     "Gender": {
                       "$ref": "#/components/schemas/Gender",
                     },
@@ -8335,6 +8348,7 @@ The advised approach is to never add decimals that have different decimals.",
                     "CanonicalURI",
                     "CanonicalURIWithKnowledgeTime",
                     "CleanedString",
+                    "EmailAddress",
                     "Language",
                     "RelativeURI",
                     "TelephoneNumber",
@@ -9883,6 +9897,16 @@ The advised approach is to never add decimals that have different decimals.",
           "value",
         ],
         "type": "object",
+      },
+      "EmailAddress": {
+        "description": "Email address accepted by the Zod email validator. Input is never transformed.",
+        "examples": [
+          "person@example.com",
+        ],
+        "format": "email",
+        "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+        "title": "Email address",
+        "type": "string",
       },
       "Gender": {
         "anyOf": [
@@ -16485,6 +16509,9 @@ The advised approach is to never add decimals that have different decimals.",
                     "Decimal": {
                       "$ref": "#/components/schemas/Decimal",
                     },
+                    "EmailAddress": {
+                      "$ref": "#/components/schemas/EmailAddress",
+                    },
                     "Gender": {
                       "$ref": "#/components/schemas/Gender",
                     },
@@ -16695,6 +16722,7 @@ The advised approach is to never add decimals that have different decimals.",
                     "CanonicalURI",
                     "CanonicalURIWithKnowledgeTime",
                     "CleanedString",
+                    "EmailAddress",
                     "Language",
                     "RelativeURI",
                     "TelephoneNumber",
