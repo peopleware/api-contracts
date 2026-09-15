@@ -43,11 +43,12 @@ identified before it affects implementation.
 - Export the schema and inferred type through that category's `index.ts` only.
   Each schema has one canonical import path; the package root exports neither
   individual schemas nor category namespaces.
-- Keep Belgian-specific contracts under `/be`, regardless of functional category.
-  Keep reusable Belgian checksum helpers private under `src/be/internal/`.
-- Use the existing `/string`, `/time`, and `/be` categories where appropriate.
-  Reserved `/number`, `/money`, and `/personalia` entrypoints become public only
-  when they contain a public contract.
+- Keep Belgian-specific contracts under `/identity/be`, regardless of the
+  functional category. Keep reusable Belgian checksum helpers private under
+  `src/_util/` or the owning identity subdomain.
+- Use the existing `/value/*`, `/identity/*`, `/resource/*`, and `/http/*`
+  namespaces where appropriate. Keep protocol-specific contracts under
+  `/protocol/*`.
 - For a new category, add its build entry in `tsdown.config.ts` and conditional
   exports in `package.json`, including ESM/CommonJS and their declarations.
 

@@ -15,12 +15,12 @@ root entrypoint. Output supports browser-safe ES2022, ESM and CommonJS.
 
 ```ts
 import { z } from "zod";
-import { TrimmedStringSchema } from "@ppwcode/api-contracts/string";
-import { DateOnlySchema } from "@ppwcode/api-contracts/time";
+import { TrimmedStringSchema } from "@ppwcode/api-contracts/value/string";
+import { DateOnlySchema } from "@ppwcode/api-contracts/value/time";
 import {
   BelgianEnterpriseNumberSchema,
   type BelgianEnterpriseNumber,
-} from "@ppwcode/api-contracts/be";
+} from "@ppwcode/api-contracts/identity/be";
 
 const CompanySchema = z.object({
   name: TrimmedStringSchema,
@@ -38,18 +38,27 @@ const result = BelgianEnterpriseNumberSchema.safeParse("0123.456.749");
 
 ## Contracts
 
-| Category  | Schema and inferred type                                           | Accepted input                                                       |
-| --------- | ------------------------------------------------------------------ | -------------------------------------------------------------------- |
-| `/string` | `TrimmedStringSchema`, `TrimmedString`                             | Non-empty string without leading or trailing JavaScript whitespace   |
-| `/string` | `TelephoneNumberSchema`, `TelephoneNumber`                         | E.164 number or 9–10 digit local number beginning with `0`           |
-| `/time`   | `DateOnlySchema`, `DateOnly`                                       | Calendar-valid `YYYY-MM-DD` using `z.iso.date()`                     |
-| `/be`     | `BelgianSocialSecurityNumberSchema`, `BelgianSocialSecurityNumber` | 11 digits; pre-2000 or post-1999 modulo-97                           |
-| `/be`     | `BelgianEnterpriseNumberSchema`, `BelgianEnterpriseNumber`         | 10 digits, first digit 0 or 1; modulo-97                             |
-| `/be`     | `BelgianVatNumberSchema`, `BelgianVatNumber`                       | Uppercase `BE` plus a valid enterprise-number structure and checksum |
-| `/money`  | `IbanSchema`, `Iban`                                               | Uppercase IBAN; 69 PPWCode country formats and MOD 97-10 checksum    |
-| `/be`     | `BelgianIbanSchema`, `BelgianIban`                                 | Uppercase `BE` plus 14 digits; ISO 13616 modulo-97                   |
+| Category               | Types                                                                                                                                                                                                                                                                                                                            | Scope                                                          |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `/value/string`        | `CanonicalURI`; `CanonicalURIWithKnowledgeTime`; `CleanedString`; `Language`; `RelativeURI`; `TelephoneNumber`; `TrimmedString`                                                                                                                                                                                                  | Canonical strings, URIs, language codes, and telephone numbers |
+| `/value/time`          | `DateOnly`; `DateOnlyPeriod`; `DateTime`; `ISODateToSecond`; `Month`; `Quarter`; `Year`                                                                                                                                                                                                                                          | Calendar values and ISO timestamps                             |
+| `/value/number`        | `Decimal`                                                                                                                                                                                                                                                                                                                        | Exact integer-based decimal representation                     |
+| `/value/money`         | `CurrencyCode`; `MonetaryValue`; `MonetaryValue2`; `MonetaryValueEUR2`; `ZeroMonetaryValueEUR2`; `NonNegativeMonetaryValue`; `NonNegativeMonetaryValueEUR2`; `NonPositiveMonetaryValue`; `NegativeMonetaryValue`; `NegativeMonetaryValueEUR2`; `PositiveMonetaryValue`; `PositiveMonetaryValueEUR2`; `PositiveMonetaryValueEUR4` | Currency codes and signed monetary values                      |
+| `/value/location`      | `Address`; `Country`                                                                                                                                                                                                                                                                                                             | Postal addresses and country codes                             |
+| `/identity/generic`    | `AccountId`; `Mode`; `UUID`                                                                                                                                                                                                                                                                                                      | Generic identifiers and execution modes                        |
+| `/identity/person`     | `Gender`                                                                                                                                                                                                                                                                                                                         | Person attributes                                              |
+| `/identity/banking`    | `Iban`                                                                                                                                                                                                                                                                                                                           | Uppercase IBAN with country structure and MOD 97-10 checksum   |
+| `/identity/be`         | `BelgianEnterpriseNumber`; `KboNumber`; `CbeNumber`; `CrnNumber`; `BelgianIban`; `BelgianSocialSecurityNumber`; `Niss`; `Insz`; `Inss`; `BelgianVatNumber`; `SigedisId`; `SigedisRegistrantId`; `SigedisRegistrantRegulationIdentification`                                                                                      | Belgian identity and organization identifiers                  |
+| `/resource/health`     | `Health`; `Status`                                                                                                                                                                                                                                                                                                               | Service health and status                                      |
+| `/resource/lifecycle`  | `Audited`; `CreatedInError`; `Timestamped`                                                                                                                                                                                                                                                                                       | Resource lifecycle and audit metadata                          |
+| `/resource/versioning` | `StructureVersion`; `StructureVersioned`; `HistoryVersion`; `History`; `HREFHistory`; `HREFHistorySearchable`                                                                                                                                                                                                                    | Resource structure versions and history                        |
+| `/resource/search`     | `SearchTerm`; `SearchDocument`; `SearchDocument2`; `SearchDocumentBase`; `SearchDocumentContentBase2`; `SearchResultBase`; `SearchResultBase2`; `SearchResults`; `HREF`; `MixedSearchResults`; `Results`                                                                                                                         | Search documents, results, and links                           |
+| `/resource/relations`  | `ToOneFromChi`                                                                                                                                                                                                                                                                                                                   | Relative links to associated resources                         |
+| `/http/parameters`     | `Accept`                                                                                                                                                                                                                                                                                                                         | HTTP request parameters                                        |
+| `/http/headers`        | `CommonResponseHeaders`; `Location`                                                                                                                                                                                                                                                                                              | HTTP response headers                                          |
+| `/http/caching`        | `CacheControlNoCache`; `CacheControlPrivateImmutable`                                                                                                                                                                                                                                                                            | HTTP cache directives                                          |
 
-`IbanSchema` is available from `@ppwcode/api-contracts/money`. Its country
+`IbanSchema` is available from `@ppwcode/api-contracts/identity/banking`. Its country
 lengths and BBAN patterns follow the supplied `PPWCode.Util.Validation.IV.IBAN`
 class (69 countries); this is a fixed compatibility table, not a live IBAN
 registry. The [PPWCode.vNext documentation](https://context7.com/peopleware/net-ppwcode-vnext/llms.txt)
@@ -60,7 +69,7 @@ the checksum requires runtime validation. `Iban` and `BelgianIban` are distinct
 brands; parse a value with the desired schema to obtain that type.
 
 ```ts
-import { IbanSchema } from "@ppwcode/api-contracts/money";
+import { IbanSchema } from "@ppwcode/api-contracts/identity/banking";
 
 IbanSchema.parse("GB82WEST12345698765432");
 ```
@@ -87,7 +96,7 @@ fixtures and restrict storage and access to what your application requires.
 
 `npm run build` also generates a complete OpenAPI 3.1 example at
 `dist/openapi-example.yaml`. Open it in an OpenAPI viewer to explore a
-`GET /example` response composed from all eight canonical contracts, with reusable
+`GET /example` response composed from the canonical contracts, with reusable
 component schemas and their metadata. The spec is self-contained and included in
 the published package at `@ppwcode/api-contracts/openapi-example.yaml`; resolve it
 with `import.meta.resolve()` or `require.resolve()` to read the YAML file.
@@ -117,7 +126,7 @@ programmatically:
 
 ```ts
 import { z } from "zod";
-import { BelgianEnterpriseNumberSchema } from "@ppwcode/api-contracts/be";
+import { BelgianEnterpriseNumberSchema } from "@ppwcode/api-contracts/identity/be";
 
 const jsonSchema = z.toJSONSchema(BelgianEnterpriseNumberSchema, {
   target: "draft-2020-12",
@@ -134,7 +143,7 @@ Choose your own generator. For example, with `zod-openapi` installed separately:
 
 ```ts
 import { createDocument } from "zod-openapi";
-import { BelgianEnterpriseNumberSchema } from "@ppwcode/api-contracts/be";
+import { BelgianEnterpriseNumberSchema } from "@ppwcode/api-contracts/identity/be";
 
 const document = createDocument({
   openapi: "3.2.0", // '3.1.0' is also tested.
@@ -164,20 +173,20 @@ representative OpenAPI 3.1/3.2 documents are snapshot tested.
 Use Node 24 LTS and npm. `npm ci` installs the locked toolchain.
 The GitHub workflows read `.nvmrc` and select the latest available Node 24 release.
 
-| Command                    | Purpose                                                                  |
-| -------------------------- | ------------------------------------------------------------------------ |
-| `npm test`                 | Watch unit and metadata tests                                            |
-| `npm run test:unit`        | Unit, property and metadata tests                                        |
-| `npm run test:types`       | Identifier and alias type assertions                                     |
-| `npm run test:coverage`    | Unit tests, coverage and JUnit report                                    |
-| `npm run build`            | ESM/CommonJS, declarations and standalone schema YAML files               |
-| `npm run test:integration` | OpenAPI tests against `dist` (build first)                               |
-| `npm run test:ci`          | All tests (build first)                                                  |
-| `npm run verify:quality`   | Lint, strict types, unit coverage and type tests                         |
-| `npm run verify:package`   | Build, integration, publint, Are the Types Wrong, dry-run pack           |
-| `npm run license:check`    | REUSE lint (install REUSE 6.2.0 first)                                   |
-| `npm run license:docker`   | License check using `fsfe/reuse:6.2.0`                                   |
-| `npm run verify`           | All quality, package and license gates                                   |
+| Command                    | Purpose                                                          |
+| -------------------------- | ---------------------------------------------------------------- |
+| `npm test`                 | Watch unit and metadata tests                                    |
+| `npm run test:unit`        | Unit, property and metadata tests                                |
+| `npm run test:types`       | Identifier and alias type assertions                             |
+| `npm run test:coverage`    | Unit tests, coverage and JUnit report                            |
+| `npm run build`            | ESM/CommonJS, declarations and standalone schema YAML files      |
+| `npm run test:integration` | OpenAPI tests against `dist` (build first)                       |
+| `npm run test:ci`          | All tests (build first)                                          |
+| `npm run verify:quality`   | Lint, strict types, unit coverage and type tests                 |
+| `npm run verify:package`   | Build, integration, publint, Are the Types Wrong, dry-run pack   |
+| `npm run license:check`    | REUSE lint (install REUSE 6.2.0 first)                           |
+| `npm run license:docker`   | License check using `fsfe/reuse:6.2.0`                           |
+| `npm run verify`           | All quality, package and license gates                           |
 | `npm run release:pack`     | Verify matching `RELEASE_TAG`, all gates, then create an archive |
 
 `npm run ci:check-production-vulnerabilities` audits production dependencies using
@@ -197,9 +206,8 @@ workflow manually and selecting the published release tag under **Use workflow
 from**. No branch build or manual CI verification run publishes.
 
 Category paths, exported names, component IDs, brands and accepted wire values
-are public API. Additive schemas are minor releases. Validation, branding or
-import-path changes require a major release. Future `/number` and
-`/personalia` entrypoints are reserved and not currently exported.
+are public API. The package is organized beneath five top-level namespaces:
+`value/*`, `identity/*`, `resource/*`, `http/*`, and `protocol/*`.
 
 ## Contributing
 

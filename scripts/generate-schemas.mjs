@@ -9,15 +9,30 @@ const dist = new URL("../dist/", import.meta.url);
 const output = new URL("schemas/", dist);
 const schemas = new Map();
 
-// Discover built category entrypoints so new exports are included automatically.
-for (const entry of await readdir(dist, { withFileTypes: true })) {
-  if (!entry.isDirectory() || entry.name === "schemas") continue;
-  const exports = await import(new URL(`${entry.name}/index.js`, dist).href);
+async function findEntrypoints(directory) {
+  const result = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    if (entry.isDirectory() && entry.name !== "schemas") {
+      result.push(
+        ...(await findEntrypoints(new URL(`${entry.name}/`, directory))),
+      );
+    } else if (entry.isFile() && entry.name === "index.js") {
+      result.push(new URL(entry.name, directory));
+    }
+  }
+  return result;
+}
+
+// Discover built nested category entrypoints so new exports are included automatically.
+for (const entrypoint of await findEntrypoints(dist)) {
+  const exports = await import(entrypoint.href);
   for (const schema of Object.values(exports)) {
     if (!(schema instanceof z.ZodType)) continue;
     const id = schema.meta()?.id;
     if (!id || !/^[A-Za-z][A-Za-z0-9_-]*$/.test(id)) {
-      throw new Error(`Invalid schema component ID in ${entry.name}: ${id}`);
+      throw new Error(
+        `Invalid schema component ID in ${entrypoint.pathname}: ${id}`,
+      );
     }
     if (schemas.has(id) && schemas.get(id) !== schema) {
       throw new Error(`Duplicate schema component ID: ${id}`);

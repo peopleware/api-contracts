@@ -9,7 +9,26 @@ import { z } from "zod";
 const require = createRequire(import.meta.url);
 test("exposes YAML for every canonical schema through package subpaths", async () => {
   const ids = new Set<string>();
-  for (const category of ["string", "time", "be", "money"]) {
+  for (const category of [
+    "value/string",
+    "value/time",
+    "value/number",
+    "value/money",
+    "value/location",
+    "identity/generic",
+    "identity/person",
+    "identity/banking",
+    "identity/be",
+    "resource/lifecycle",
+    "resource/relations",
+    "resource/search",
+    "resource/versioning",
+    "resource/health",
+    "http/parameters",
+    "http/headers",
+    "http/caching",
+    "protocol/oauth2",
+  ]) {
     const exports = await import(
       /* @vite-ignore */ `@ppwcode/api-contracts/${category}`
     );
@@ -31,23 +50,39 @@ test("exposes YAML for every canonical schema through package subpaths", async (
   ).toEqual([...ids].map((id) => `${id}.yaml`).sort());
 });
 
-test.each(["string", "time", "be", "money"])(
-  "loads %s through ESM and CommonJS",
-  async (category) => {
-    const esm = await import(
-      /* @vite-ignore */ `@ppwcode/api-contracts/${category}`
-    );
-    const cjs = require(`@ppwcode/api-contracts/${category}`);
-    expect(Object.keys(esm).sort()).toEqual(Object.keys(cjs).sort());
-    for (const schema of Object.values(cjs) as {
-      parse: (value: unknown) => unknown;
-      meta: () => { examples: unknown[] };
-    }[]) {
-      for (const value of schema.meta().examples)
-        expect(schema.parse(value)).toBe(value);
-    }
-  },
-);
+test.each([
+  "value/string",
+  "value/time",
+  "value/number",
+  "value/money",
+  "value/location",
+  "identity/generic",
+  "identity/person",
+  "identity/banking",
+  "identity/be",
+  "resource/lifecycle",
+  "resource/relations",
+  "resource/search",
+  "resource/versioning",
+  "resource/health",
+  "http/parameters",
+  "http/headers",
+  "http/caching",
+  "protocol/oauth2",
+])("loads %s through ESM and CommonJS", async (category) => {
+  const esm = await import(
+    /* @vite-ignore */ `@ppwcode/api-contracts/${category}`
+  );
+  const cjs = require(`@ppwcode/api-contracts/${category}`);
+  expect(Object.keys(esm).sort()).toEqual(Object.keys(cjs).sort());
+  for (const schema of Object.values(cjs) as {
+    parse: (value: unknown) => unknown;
+    meta: () => { examples: unknown[] };
+  }[]) {
+    for (const value of schema.meta().examples)
+      expect(schema.parse(value)).toStrictEqual(value);
+  }
+});
 
 test("does not export a root entrypoint", () => {
   expect(() => require("@ppwcode/api-contracts")).toThrow(
@@ -56,14 +91,16 @@ test("does not export a root entrypoint", () => {
 });
 
 test.each([
-  "/number",
-  "/money/_util/iban-country-patterns",
-  "/personalia",
+  "/identity/banking/_util/iban-country-patterns",
   "/_util/modulo-97",
   "/dist/be/index.js",
 ])("cannot load unbuilt path %s", (path) => {
   expect(() => require(`@ppwcode/api-contracts${path}`)).toThrow(
-    expect.objectContaining({ code: "MODULE_NOT_FOUND" }),
+    expect.objectContaining({
+      code: expect.stringMatching(
+        /MODULE_NOT_FOUND|ERR_PACKAGE_PATH_NOT_EXPORTED/,
+      ),
+    }),
   );
 });
 

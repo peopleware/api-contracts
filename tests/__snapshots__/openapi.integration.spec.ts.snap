@@ -5,9 +5,16 @@ exports[`generates OpenAPI 3.1.0 using packaged schemas 1`] = `
   "components": {
     "schemas": {
       "BelgianEnterpriseNumber": {
-        "description": "Canonical 10-digit KBO/CBE starting with 0 or 1. Checksum requires runtime validation; registry membership is not checked.",
+        "description": "Canonical 10-digit Belgian enterprise number (KBO/CBE), also known as a company registration number (CRN). It uniquely identifies an organization and is also used as the Belgian VAT identifier.
+
+The number is issued by the Belgian government through the [Crossroads Bank for Enterprises](https://economie.fgov.be/en/themes/enterprises/crossroads-bank-enterprises) (CBE; KBO, BCE or ZDU). It never changes; a different number identifies a different legal organization. The representation contains digits only.
+
+It starts with \`0\` or \`1\` and consists of 8 digits followed by a modulo-97 checksum. Validation checks the structure and checksum, but not registry membership. Checksum validation requires runtime validation.",
         "examples": [
           "0123456749",
+          "0453834195",
+          "1453834119",
+          "1234567401",
         ],
         "maxLength": 10,
         "minLength": 10,
@@ -27,9 +34,17 @@ exports[`generates OpenAPI 3.1.0 using packaged schemas 1`] = `
         "type": "string",
       },
       "BelgianSocialSecurityNumber": {
-        "description": "Canonical 11-digit INSZ/NISS, including BIS numbers. Validates pre-2000 or post-1999 modulo-97; does not validate birth date, gender or registry membership. Checksum requires runtime validation.",
+        "description": "Canonical 11-digit Belgian social security number (INSS; INSZ, NISS or ENSS), including national registration and BIS numbers. BIS numbers encode an adjusted birth month (increased by 20 or 40). The representation contains digits only.
+
+An INSS identifies a person for Belgian social security purposes and may change over time; this is the value applicable since \`createdAt\`. Under Belgian labour law, every person who works in Belgium has an INSS.
+
+Validation applies the modulo-97 checksum rules for pre-2000 and post-1999 numbers. It does not validate the birth date, gender or registry membership. Checksum validation requires runtime validation.",
         "examples": [
           "00000000097",
+          "86081203314",
+          "04031800277",
+          "86281203357",
+          "05291705534",
         ],
         "maxLength": 11,
         "minLength": 11,
@@ -49,9 +64,11 @@ exports[`generates OpenAPI 3.1.0 using packaged schemas 1`] = `
         "type": "string",
       },
       "DateOnly": {
-        "description": "Calendar-valid date in canonical YYYY-MM-DD format, without time or timezone.",
+        "description": "A calendar-valid day in the history of the world, using the ISO-8601 canonical YYYY-MM-DD format, without time or timezone. This is stored, communicated, and visualized as-is, and interpreted locally.",
         "examples": [
           "2024-02-29",
+          "2020-01-23",
+          "1999-01-01",
         ],
         "format": "date",
         "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$",
@@ -147,9 +164,16 @@ exports[`generates OpenAPI 3.2.0 using packaged schemas 1`] = `
   "components": {
     "schemas": {
       "BelgianEnterpriseNumber": {
-        "description": "Canonical 10-digit KBO/CBE starting with 0 or 1. Checksum requires runtime validation; registry membership is not checked.",
+        "description": "Canonical 10-digit Belgian enterprise number (KBO/CBE), also known as a company registration number (CRN). It uniquely identifies an organization and is also used as the Belgian VAT identifier.
+
+The number is issued by the Belgian government through the [Crossroads Bank for Enterprises](https://economie.fgov.be/en/themes/enterprises/crossroads-bank-enterprises) (CBE; KBO, BCE or ZDU). It never changes; a different number identifies a different legal organization. The representation contains digits only.
+
+It starts with \`0\` or \`1\` and consists of 8 digits followed by a modulo-97 checksum. Validation checks the structure and checksum, but not registry membership. Checksum validation requires runtime validation.",
         "examples": [
           "0123456749",
+          "0453834195",
+          "1453834119",
+          "1234567401",
         ],
         "maxLength": 10,
         "minLength": 10,
@@ -169,9 +193,17 @@ exports[`generates OpenAPI 3.2.0 using packaged schemas 1`] = `
         "type": "string",
       },
       "BelgianSocialSecurityNumber": {
-        "description": "Canonical 11-digit INSZ/NISS, including BIS numbers. Validates pre-2000 or post-1999 modulo-97; does not validate birth date, gender or registry membership. Checksum requires runtime validation.",
+        "description": "Canonical 11-digit Belgian social security number (INSS; INSZ, NISS or ENSS), including national registration and BIS numbers. BIS numbers encode an adjusted birth month (increased by 20 or 40). The representation contains digits only.
+
+An INSS identifies a person for Belgian social security purposes and may change over time; this is the value applicable since \`createdAt\`. Under Belgian labour law, every person who works in Belgium has an INSS.
+
+Validation applies the modulo-97 checksum rules for pre-2000 and post-1999 numbers. It does not validate the birth date, gender or registry membership. Checksum validation requires runtime validation.",
         "examples": [
           "00000000097",
+          "86081203314",
+          "04031800277",
+          "86281203357",
+          "05291705534",
         ],
         "maxLength": 11,
         "minLength": 11,
@@ -191,9 +223,11 @@ exports[`generates OpenAPI 3.2.0 using packaged schemas 1`] = `
         "type": "string",
       },
       "DateOnly": {
-        "description": "Calendar-valid date in canonical YYYY-MM-DD format, without time or timezone.",
+        "description": "A calendar-valid day in the history of the world, using the ISO-8601 canonical YYYY-MM-DD format, without time or timezone. This is stored, communicated, and visualized as-is, and interpreted locally.",
         "examples": [
           "2024-02-29",
+          "2020-01-23",
+          "1999-01-01",
         ],
         "format": "date",
         "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$",
