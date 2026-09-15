@@ -1,7 +1,6 @@
 // Copyright 2026 PeopleWare N.V.
 // SPDX-License-Identifier: Apache-2.0
 import { z } from "zod";
-import { modulo97 } from "../../_util/modulo-97.js";
 import { ibanCountryPatterns } from "./_util/iban-country-patterns.js";
 
 const pattern = new RegExp(
@@ -11,17 +10,11 @@ const pattern = new RegExp(
 );
 
 export const IbanSchema = z
-  .string()
-  .min(14)
-  .max(34)
+  .iban()
+  // z.iban() intentionally omits per-country BBAN rules; retain them here to
+  // preserve this schema's stricter validation. See Zod's implementation rationale:
+  // https://github.com/colinhacks/zod/issues/6565
   .regex(pattern)
-  .refine((value) => {
-    const rearranged = value.slice(4) + value.slice(0, 4);
-    const digits = rearranged.replace(/[A-Z]/g, (letter) =>
-      String(letter.charCodeAt(0) - 55),
-    );
-    return modulo97(digits) === 1;
-  }, "Invalid IBAN checksum")
   .brand<"Iban">()
   .meta({
     id: "Iban",

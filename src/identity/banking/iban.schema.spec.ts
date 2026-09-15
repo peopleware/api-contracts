@@ -79,10 +79,19 @@ test("validates generated alphanumeric accounts and detects digit mutations", ()
 
 test("exports country structure but leaves checksums to runtime validation", () => {
   const json = z.toJSONSchema(schema);
-  const pattern = new RegExp(json.$defs!.Iban!.pattern as string);
-  expect(pattern.test("BE69539007547034")).toBe(true);
-  expect(pattern.test(withChecksum("NL", "12340417164300"))).toBe(false);
-  expect(pattern.test("BE68539007547034\n")).toBe(false);
+  const ibanSchema = json.$defs!.Iban!;
+  const patterns = [
+    ...(ibanSchema.pattern ? [ibanSchema.pattern] : []),
+    ...(ibanSchema.allOf ?? []).flatMap((schema) =>
+      schema.pattern ? [schema.pattern] : [],
+    ),
+  ].map((pattern) => new RegExp(pattern));
+  const matchesAllPatterns = (value: string) =>
+    patterns.every((pattern) => pattern.test(value));
+
+  expect(matchesAllPatterns("BE69539007547034")).toBe(true);
+  expect(matchesAllPatterns(withChecksum("NL", "12340417164300"))).toBe(false);
+  expect(matchesAllPatterns("BE68539007547034\n")).toBe(false);
 });
 
 // Independent fixtures transcribed from the supplied C# country table.
