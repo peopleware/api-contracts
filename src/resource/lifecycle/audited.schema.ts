@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import { z } from "zod";
 
+import { TrimmedStringSchema } from "../../value/string/trimmed-string.schema.js";
+
 export const AuditedSchema = z
   .object({
     createdAt: z
@@ -12,7 +14,7 @@ export const AuditedSchema = z
           "",
         ),
       ),
-    createdBy: z.string().optional(),
+    createdBy: TrimmedStringSchema.optional(),
   })
   .passthrough()
   .meta({

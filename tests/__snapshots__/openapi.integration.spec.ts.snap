@@ -245,6 +245,142 @@ one general account representing the overal import process.",
         ],
         "type": "object",
       },
+      "Auditable": {
+        "additionalProperties": {},
+        "description": "Creation-audit and modification-audit metadata for a resource.",
+        "examples": [
+          {
+            "createdAt": "2026-01-23T15:22:39.212Z",
+            "createdBy": "system",
+            "lastModifiedAt": "2026-02-01T10:11:12.123Z",
+            "lastModifiedBy": "admin",
+          },
+          {
+            "createdAt": null,
+            "createdBy": null,
+            "lastModifiedAt": null,
+            "lastModifiedBy": null,
+          },
+        ],
+        "properties": {
+          "createdAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "createdBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "lastModifiedAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "lastModifiedBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+        },
+        "type": "object",
+      },
+      "AuditablePersistent": {
+        "additionalProperties": {},
+        "description": "Persistence, creation-audit, and modification-audit metadata for a resource with a nullable Int64 identity.",
+        "examples": [
+          {
+            "createdAt": "2026-01-23T15:22:39.212Z",
+            "createdBy": "system",
+            "id": 42,
+            "lastModifiedAt": "2026-02-01T10:11:12.123Z",
+            "lastModifiedBy": "admin",
+          },
+          {
+            "createdAt": null,
+            "createdBy": null,
+            "id": null,
+            "lastModifiedAt": null,
+            "lastModifiedBy": null,
+          },
+        ],
+        "properties": {
+          "createdAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "createdBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "id": {
+            "anyOf": [
+              {
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991,
+                "type": "integer",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "lastModifiedAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "lastModifiedBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+        },
+        "type": "object",
+      },
       "Audited": {
         "additionalProperties": {},
         "examples": [
@@ -263,7 +399,7 @@ one general account representing the overal import process.",
             "type": "string",
           },
           "createdBy": {
-            "type": "string",
+            "$ref": "#/components/schemas/TrimmedString",
           },
         },
         "required": [
@@ -448,7 +584,7 @@ resource. The value must be a moment in time, expressed as ISO-8601 in UTC ('Z')
             "type": "string",
           },
           "createdBy": {
-            "type": "string",
+            "$ref": "#/components/schemas/TrimmedString",
           },
           "createdInError": {
             "const": true,
@@ -1788,6 +1924,94 @@ over the person's lifetime.",
         ],
         "title": "International IBAN",
         "type": "string",
+      },
+      "InsertAuditable": {
+        "additionalProperties": {},
+        "description": "Creation-audit metadata for a resource.",
+        "examples": [
+          {
+            "createdAt": "2026-01-23T15:22:39.212Z",
+            "createdBy": "system",
+          },
+          {
+            "createdAt": null,
+            "createdBy": null,
+          },
+        ],
+        "properties": {
+          "createdAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "createdBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+        },
+        "type": "object",
+      },
+      "InsertAuditablePersistent": {
+        "additionalProperties": {},
+        "description": "Persistence and creation-audit metadata for a resource with a nullable Int64 identity.",
+        "examples": [
+          {
+            "createdAt": "2026-01-23T15:22:39.212Z",
+            "createdBy": "system",
+            "id": 42,
+          },
+          {
+            "createdAt": null,
+            "createdBy": null,
+            "id": null,
+          },
+        ],
+        "properties": {
+          "createdAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "createdBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "id": {
+            "anyOf": [
+              {
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991,
+                "type": "integer",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+        },
+        "type": "object",
       },
       "Language": {
         "description": "Language to be used in communication with the subject. The value is expressed according to
@@ -6177,6 +6401,33 @@ terms:
           "decimals",
           "amount",
         ],
+        "type": "object",
+      },
+      "Persistent": {
+        "additionalProperties": {},
+        "description": "Persistence metadata for a resource with a nullable Int64 identity.",
+        "examples": [
+          {
+            "id": 42,
+          },
+          {
+            "id": null,
+          },
+        ],
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991,
+                "type": "integer",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+        },
         "type": "object",
       },
       "PersonName": {
@@ -8115,6 +8366,12 @@ The advised approach is to never add decimals that have different decimals.",
                     "AddressWithNisCode": {
                       "$ref": "#/components/schemas/AddressWithNisCode",
                     },
+                    "Auditable": {
+                      "$ref": "#/components/schemas/Auditable",
+                    },
+                    "AuditablePersistent": {
+                      "$ref": "#/components/schemas/AuditablePersistent",
+                    },
                     "Audited": {
                       "$ref": "#/components/schemas/Audited",
                     },
@@ -8199,6 +8456,12 @@ The advised approach is to never add decimals that have different decimals.",
                     "Iban": {
                       "$ref": "#/components/schemas/Iban",
                     },
+                    "InsertAuditable": {
+                      "$ref": "#/components/schemas/InsertAuditable",
+                    },
+                    "InsertAuditablePersistent": {
+                      "$ref": "#/components/schemas/InsertAuditablePersistent",
+                    },
                     "Language": {
                       "$ref": "#/components/schemas/Language",
                     },
@@ -8237,6 +8500,9 @@ The advised approach is to never add decimals that have different decimals.",
                     },
                     "NonPositiveMonetaryValue": {
                       "$ref": "#/components/schemas/NonPositiveMonetaryValue",
+                    },
+                    "Persistent": {
+                      "$ref": "#/components/schemas/Persistent",
                     },
                     "PersonName": {
                       "$ref": "#/components/schemas/PersonName",
@@ -8345,7 +8611,12 @@ The advised approach is to never add decimals that have different decimals.",
                     "Health",
                     "Status",
                     "Audited",
+                    "AuditablePersistent",
+                    "Auditable",
                     "CreatedInError",
+                    "InsertAuditablePersistent",
+                    "InsertAuditable",
+                    "Persistent",
                     "Timestamped",
                     "ToOneFromChi",
                     "SearchTerm",
@@ -8657,6 +8928,142 @@ one general account representing the overal import process.",
         ],
         "type": "object",
       },
+      "Auditable": {
+        "additionalProperties": {},
+        "description": "Creation-audit and modification-audit metadata for a resource.",
+        "examples": [
+          {
+            "createdAt": "2026-01-23T15:22:39.212Z",
+            "createdBy": "system",
+            "lastModifiedAt": "2026-02-01T10:11:12.123Z",
+            "lastModifiedBy": "admin",
+          },
+          {
+            "createdAt": null,
+            "createdBy": null,
+            "lastModifiedAt": null,
+            "lastModifiedBy": null,
+          },
+        ],
+        "properties": {
+          "createdAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "createdBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "lastModifiedAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "lastModifiedBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+        },
+        "type": "object",
+      },
+      "AuditablePersistent": {
+        "additionalProperties": {},
+        "description": "Persistence, creation-audit, and modification-audit metadata for a resource with a nullable Int64 identity.",
+        "examples": [
+          {
+            "createdAt": "2026-01-23T15:22:39.212Z",
+            "createdBy": "system",
+            "id": 42,
+            "lastModifiedAt": "2026-02-01T10:11:12.123Z",
+            "lastModifiedBy": "admin",
+          },
+          {
+            "createdAt": null,
+            "createdBy": null,
+            "id": null,
+            "lastModifiedAt": null,
+            "lastModifiedBy": null,
+          },
+        ],
+        "properties": {
+          "createdAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "createdBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "id": {
+            "anyOf": [
+              {
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991,
+                "type": "integer",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "lastModifiedAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "lastModifiedBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+        },
+        "type": "object",
+      },
       "Audited": {
         "additionalProperties": {},
         "examples": [
@@ -8675,7 +9082,7 @@ one general account representing the overal import process.",
             "type": "string",
           },
           "createdBy": {
-            "type": "string",
+            "$ref": "#/components/schemas/TrimmedString",
           },
         },
         "required": [
@@ -8860,7 +9267,7 @@ resource. The value must be a moment in time, expressed as ISO-8601 in UTC ('Z')
             "type": "string",
           },
           "createdBy": {
-            "type": "string",
+            "$ref": "#/components/schemas/TrimmedString",
           },
           "createdInError": {
             "const": true,
@@ -10200,6 +10607,94 @@ over the person's lifetime.",
         ],
         "title": "International IBAN",
         "type": "string",
+      },
+      "InsertAuditable": {
+        "additionalProperties": {},
+        "description": "Creation-audit metadata for a resource.",
+        "examples": [
+          {
+            "createdAt": "2026-01-23T15:22:39.212Z",
+            "createdBy": "system",
+          },
+          {
+            "createdAt": null,
+            "createdBy": null,
+          },
+        ],
+        "properties": {
+          "createdAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "createdBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+        },
+        "type": "object",
+      },
+      "InsertAuditablePersistent": {
+        "additionalProperties": {},
+        "description": "Persistence and creation-audit metadata for a resource with a nullable Int64 identity.",
+        "examples": [
+          {
+            "createdAt": "2026-01-23T15:22:39.212Z",
+            "createdBy": "system",
+            "id": 42,
+          },
+          {
+            "createdAt": null,
+            "createdBy": null,
+            "id": null,
+          },
+        ],
+        "properties": {
+          "createdAt": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DateTime",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "createdBy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrimmedString",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+          "id": {
+            "anyOf": [
+              {
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991,
+                "type": "integer",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+        },
+        "type": "object",
       },
       "Language": {
         "description": "Language to be used in communication with the subject. The value is expressed according to
@@ -14591,6 +15086,33 @@ terms:
         ],
         "type": "object",
       },
+      "Persistent": {
+        "additionalProperties": {},
+        "description": "Persistence metadata for a resource with a nullable Int64 identity.",
+        "examples": [
+          {
+            "id": 42,
+          },
+          {
+            "id": null,
+          },
+        ],
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991,
+                "type": "integer",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+        },
+        "type": "object",
+      },
       "PersonName": {
         "additionalProperties": {},
         "description": "A person's first name, last name, and full name.",
@@ -16527,6 +17049,12 @@ The advised approach is to never add decimals that have different decimals.",
                     "AddressWithNisCode": {
                       "$ref": "#/components/schemas/AddressWithNisCode",
                     },
+                    "Auditable": {
+                      "$ref": "#/components/schemas/Auditable",
+                    },
+                    "AuditablePersistent": {
+                      "$ref": "#/components/schemas/AuditablePersistent",
+                    },
                     "Audited": {
                       "$ref": "#/components/schemas/Audited",
                     },
@@ -16611,6 +17139,12 @@ The advised approach is to never add decimals that have different decimals.",
                     "Iban": {
                       "$ref": "#/components/schemas/Iban",
                     },
+                    "InsertAuditable": {
+                      "$ref": "#/components/schemas/InsertAuditable",
+                    },
+                    "InsertAuditablePersistent": {
+                      "$ref": "#/components/schemas/InsertAuditablePersistent",
+                    },
                     "Language": {
                       "$ref": "#/components/schemas/Language",
                     },
@@ -16649,6 +17183,9 @@ The advised approach is to never add decimals that have different decimals.",
                     },
                     "NonPositiveMonetaryValue": {
                       "$ref": "#/components/schemas/NonPositiveMonetaryValue",
+                    },
+                    "Persistent": {
+                      "$ref": "#/components/schemas/Persistent",
                     },
                     "PersonName": {
                       "$ref": "#/components/schemas/PersonName",
@@ -16757,7 +17294,12 @@ The advised approach is to never add decimals that have different decimals.",
                     "Health",
                     "Status",
                     "Audited",
+                    "AuditablePersistent",
+                    "Auditable",
                     "CreatedInError",
+                    "InsertAuditablePersistent",
+                    "InsertAuditable",
+                    "Persistent",
                     "Timestamped",
                     "ToOneFromChi",
                     "SearchTerm",

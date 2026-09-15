@@ -7,6 +7,10 @@
 
 ### Features
 
+- Add `PersistentSchema`, `InsertAuditableSchema`,
+  `InsertAuditablePersistentSchema`, `AuditableSchema`, and
+  `AuditablePersistentSchema` under `/resource/lifecycle`, modelling the
+  supplied inheritance hierarchy with `long` identities.
 - Add branded `EmailAddressSchema` / `EmailAddress` under `/string`.
 - Brand canonical primitive domain values, including dates, currencies, URLs,
   modes, and identifiers, while leaving structural object schemas unbranded.

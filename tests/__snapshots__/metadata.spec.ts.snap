@@ -295,6 +295,198 @@ exports[`JSON Schema metadata for AddressWithNisCode > AddressWithNisCode 1`] = 
 }
 `;
 
+exports[`JSON Schema metadata for Auditable > Auditable 1`] = `
+{
+  "$defs": {
+    "Auditable": {
+      "additionalProperties": {},
+      "description": "Creation-audit and modification-audit metadata for a resource.",
+      "examples": [
+        {
+          "createdAt": "2026-01-23T15:22:39.212Z",
+          "createdBy": "system",
+          "lastModifiedAt": "2026-02-01T10:11:12.123Z",
+          "lastModifiedBy": "admin",
+        },
+        {
+          "createdAt": null,
+          "createdBy": null,
+          "lastModifiedAt": null,
+          "lastModifiedBy": null,
+        },
+      ],
+      "properties": {
+        "createdAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DateTime",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+        "createdBy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TrimmedString",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+        "lastModifiedAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DateTime",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+        "lastModifiedBy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TrimmedString",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+      },
+      "type": "object",
+    },
+    "DateTime": {
+      "description": "Moment in time, as ISO-8601 expressed in UTC ('Z'), to ms precision or more precise.",
+      "examples": [
+        "2020-01-23T15:22:39.212Z",
+        "2020-01-23T15:22:39.21254888Z",
+      ],
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])-((0[1-9]|[1-2]\\d)|30|31)T(0\\d|1\\d|2[0-3]):([0-5]\\d):([0-5]\\d)\\.\\d{3,}Z$",
+      "type": "string",
+    },
+    "TrimmedString": {
+      "description": "Non-empty string without leading or trailing whitespace. Input is never transformed.",
+      "examples": [
+        "Hello world",
+      ],
+      "minLength": 1,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$(?![\\s\\S])",
+      "title": "Trimmed string",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/Auditable",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
+exports[`JSON Schema metadata for AuditablePersistent > AuditablePersistent 1`] = `
+{
+  "$defs": {
+    "AuditablePersistent": {
+      "additionalProperties": {},
+      "description": "Persistence, creation-audit, and modification-audit metadata for a resource with a nullable Int64 identity.",
+      "examples": [
+        {
+          "createdAt": "2026-01-23T15:22:39.212Z",
+          "createdBy": "system",
+          "id": 42,
+          "lastModifiedAt": "2026-02-01T10:11:12.123Z",
+          "lastModifiedBy": "admin",
+        },
+        {
+          "createdAt": null,
+          "createdBy": null,
+          "id": null,
+          "lastModifiedAt": null,
+          "lastModifiedBy": null,
+        },
+      ],
+      "properties": {
+        "createdAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DateTime",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+        "createdBy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TrimmedString",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+        "id": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+        "lastModifiedAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DateTime",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+        "lastModifiedBy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TrimmedString",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+      },
+      "type": "object",
+    },
+    "DateTime": {
+      "description": "Moment in time, as ISO-8601 expressed in UTC ('Z'), to ms precision or more precise.",
+      "examples": [
+        "2020-01-23T15:22:39.212Z",
+        "2020-01-23T15:22:39.21254888Z",
+      ],
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])-((0[1-9]|[1-2]\\d)|30|31)T(0\\d|1\\d|2[0-3]):([0-5]\\d):([0-5]\\d)\\.\\d{3,}Z$",
+      "type": "string",
+    },
+    "TrimmedString": {
+      "description": "Non-empty string without leading or trailing whitespace. Input is never transformed.",
+      "examples": [
+        "Hello world",
+      ],
+      "minLength": 1,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$(?![\\s\\S])",
+      "title": "Trimmed string",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/AuditablePersistent",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
 exports[`JSON Schema metadata for Audited > Audited 1`] = `
 {
   "$defs": {
@@ -316,13 +508,23 @@ exports[`JSON Schema metadata for Audited > Audited 1`] = `
           "type": "string",
         },
         "createdBy": {
-          "type": "string",
+          "$ref": "#/$defs/TrimmedString",
         },
       },
       "required": [
         "createdAt",
       ],
       "type": "object",
+    },
+    "TrimmedString": {
+      "description": "Non-empty string without leading or trailing whitespace. Input is never transformed.",
+      "examples": [
+        "Hello world",
+      ],
+      "minLength": 1,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$(?![\\s\\S])",
+      "title": "Trimmed string",
+      "type": "string",
     },
   },
   "$ref": "#/$defs/Audited",
@@ -609,7 +811,7 @@ exports[`JSON Schema metadata for CreatedInError > CreatedInError 1`] = `
           "type": "string",
         },
         "createdBy": {
-          "type": "string",
+          "$ref": "#/$defs/TrimmedString",
         },
         "createdInError": {
           "const": true,
@@ -628,6 +830,16 @@ exports[`JSON Schema metadata for CreatedInError > CreatedInError 1`] = `
         "createdInError",
       ],
       "type": "object",
+    },
+    "TrimmedString": {
+      "description": "Non-empty string without leading or trailing whitespace. Input is never transformed.",
+      "examples": [
+        "Hello world",
+      ],
+      "minLength": 1,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$(?![\\s\\S])",
+      "title": "Trimmed string",
+      "type": "string",
     },
   },
   "$ref": "#/$defs/CreatedInError",
@@ -2060,6 +2272,150 @@ exports[`JSON Schema metadata for ISODateToSecond > ISODateToSecond 1`] = `
     },
   },
   "$ref": "#/$defs/ISODateToSecond",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
+exports[`JSON Schema metadata for InsertAuditable > InsertAuditable 1`] = `
+{
+  "$defs": {
+    "DateTime": {
+      "description": "Moment in time, as ISO-8601 expressed in UTC ('Z'), to ms precision or more precise.",
+      "examples": [
+        "2020-01-23T15:22:39.212Z",
+        "2020-01-23T15:22:39.21254888Z",
+      ],
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])-((0[1-9]|[1-2]\\d)|30|31)T(0\\d|1\\d|2[0-3]):([0-5]\\d):([0-5]\\d)\\.\\d{3,}Z$",
+      "type": "string",
+    },
+    "InsertAuditable": {
+      "additionalProperties": {},
+      "description": "Creation-audit metadata for a resource.",
+      "examples": [
+        {
+          "createdAt": "2026-01-23T15:22:39.212Z",
+          "createdBy": "system",
+        },
+        {
+          "createdAt": null,
+          "createdBy": null,
+        },
+      ],
+      "properties": {
+        "createdAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DateTime",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+        "createdBy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TrimmedString",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+      },
+      "type": "object",
+    },
+    "TrimmedString": {
+      "description": "Non-empty string without leading or trailing whitespace. Input is never transformed.",
+      "examples": [
+        "Hello world",
+      ],
+      "minLength": 1,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$(?![\\s\\S])",
+      "title": "Trimmed string",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/InsertAuditable",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
+exports[`JSON Schema metadata for InsertAuditablePersistent > InsertAuditablePersistent 1`] = `
+{
+  "$defs": {
+    "DateTime": {
+      "description": "Moment in time, as ISO-8601 expressed in UTC ('Z'), to ms precision or more precise.",
+      "examples": [
+        "2020-01-23T15:22:39.212Z",
+        "2020-01-23T15:22:39.21254888Z",
+      ],
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])-((0[1-9]|[1-2]\\d)|30|31)T(0\\d|1\\d|2[0-3]):([0-5]\\d):([0-5]\\d)\\.\\d{3,}Z$",
+      "type": "string",
+    },
+    "InsertAuditablePersistent": {
+      "additionalProperties": {},
+      "description": "Persistence and creation-audit metadata for a resource with a nullable Int64 identity.",
+      "examples": [
+        {
+          "createdAt": "2026-01-23T15:22:39.212Z",
+          "createdBy": "system",
+          "id": 42,
+        },
+        {
+          "createdAt": null,
+          "createdBy": null,
+          "id": null,
+        },
+      ],
+      "properties": {
+        "createdAt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DateTime",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+        "createdBy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TrimmedString",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+        "id": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+      },
+      "type": "object",
+    },
+    "TrimmedString": {
+      "description": "Non-empty string without leading or trailing whitespace. Input is never transformed.",
+      "examples": [
+        "Hello world",
+      ],
+      "minLength": 1,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$(?![\\s\\S])",
+      "title": "Trimmed string",
+      "type": "string",
+    },
+  },
+  "$ref": "#/$defs/InsertAuditablePersistent",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
 }
 `;
@@ -6577,6 +6933,42 @@ terms:
     },
   },
   "$ref": "#/$defs/NonPositiveMonetaryValue",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+}
+`;
+
+exports[`JSON Schema metadata for Persistent > Persistent 1`] = `
+{
+  "$defs": {
+    "Persistent": {
+      "additionalProperties": {},
+      "description": "Persistence metadata for a resource with a nullable Int64 identity.",
+      "examples": [
+        {
+          "id": 42,
+        },
+        {
+          "id": null,
+        },
+      ],
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer",
+            },
+            {
+              "type": "null",
+            },
+          ],
+        },
+      },
+      "type": "object",
+    },
+  },
+  "$ref": "#/$defs/Persistent",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
 }
 `;

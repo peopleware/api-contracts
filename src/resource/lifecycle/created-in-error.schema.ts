@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import { z } from "zod";
 
+import { TrimmedStringSchema } from "../../value/string/trimmed-string.schema.js";
+
 export const CreatedInErrorSchema = z
   .object({
     structureVersion: z.number().int().min(1),
@@ -13,7 +15,7 @@ export const CreatedInErrorSchema = z
           "",
         ),
       ),
-    createdBy: z.string(),
+    createdBy: TrimmedStringSchema,
     createdInError: z.literal(true),
   })
   .passthrough()
